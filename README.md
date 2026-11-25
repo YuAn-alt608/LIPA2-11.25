@@ -38,7 +38,7 @@ SHA256SUMS.txt  checksum of every file in this repository
 
 | Input | Source | Accessed through |
 | --- | --- | --- |
-| Fiber-seq `percent.accessible` (all, hap1, hap2) and FIRE peaks, 41 samples, hg38 | UCSC/PacBio Fiber-seq Compendium, the resource described by Vollger et al. (bioRxiv 10.1101/2024.06.14.599122, version 3) | per-sample URLs in `data/meta/fiberseq_samples.tsv` |
+| Fiber-seq `percent.accessible` (all, hap1, hap2) and FIRE peaks, 41 samples, hg38 | UCSC/PacBio Fiber-seq Compendium, the resource described by Vollger et al. (2026) *Cell* 189, 6613-6629 | per-sample URLs in `data/meta/fiberseq_samples.tsv` |
 | hiPS6 RNA-seq and CUT&RUN | Adami et al. (2025) *Cell Genomics* 5, 100979 | GEO/ENA deposit of that study |
 | Bisulfite data for the independent methylation comparison | ENCODE | ENCFF423PGW, ENCFF716NKX |
 | Repeat annotation | RepeatMasker (Smit et al. 2015) | hg38 rmsk |
