@@ -34,7 +34,7 @@ python 356_online_resource.py # assembles Tables S1-S8 into one xlsx
 ## 3. Audits
 
 ```
-python 345_text_audit.py      # 70 checks: text and tables vs data/derived
+python 345_text_audit.py      # 71 checks: text and tables vs data/derived
 python 346_figure_audit.py    # 87 checks: *_numbers.json vs text
 ```
 
