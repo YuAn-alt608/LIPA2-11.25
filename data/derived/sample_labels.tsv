@@ -1,0 +1,42 @@
+sample	cell_class	pluripotent	source	cellosaurus	cs_category	cs_verdict
+H1	ESC	True	compendium tissue='Embryonic stem cell'; Cellosaurus CVCL_9771 = WA01（WiCell H1）	CVCL_9771	Embryonic stem cell	AGREE
+H9	ESC	True	compendium tissue='Embryonic stem cell'; Cellosaurus CVCL_9773 = WA09（WiCell H9）	CVCL_9773	Embryonic stem cell	AGREE
+WTC-11	iPSC	True	Cellosaurus CVCL_Y803 = Induced pluripotent stem cell	CVCL_Y803	Induced pluripotent stem cell	AGREE
+Caco-2	differentiated	False	Cellosaurus CVCL_0025 = Caco-2（结肠腺癌）	CVCL_0025	Cancer cell line	AGREE
+K562	differentiated	False	Cellosaurus CVCL_0004 = K562（红白血病）	CVCL_0004	Cancer cell line	AGREE
+HCT116	differentiated	False	Cellosaurus CVCL_0291 = HCT116（结肠癌）	CVCL_0291	Cancer cell line	AGREE
+GM27730	iPSC	True	Cellosaurus CVCL_ZH94 = iPSC（PGP huAA53E0）；与 CVCL_1C78（GM24385/HG002，LCL）同一个体。compendium tissue 写作 Lymphoblastoid，本表不采用该字段	CVCL_ZH94	Induced pluripotent stem cell	AGREE
+A549	differentiated	False	Cellosaurus CVCL_0023 = A549（肺腺癌）	CVCL_0023	Cancer cell line	AGREE
+Hek293T	differentiated	False	Cellosaurus CVCL_0063 = HEK293T（Transformed cell line，胚肾）	CVCL_0063	Transformed cell line	AGREE
+THP-1	differentiated	False	Cellosaurus CVCL_0006 = THP-1（单核，白血病）	CVCL_0006	Cancer cell line	AGREE
+Panc1	differentiated	False	Cellosaurus CVCL_0480 = Panc 1（胰腺导管腺癌）	CVCL_0480	Cancer cell line	AGREE
+MCF-7	differentiated	False	Cellosaurus CVCL_0031 = MCF-7（乳腺腺癌）	CVCL_0031	Cancer cell line	AGREE
+HG01358	differentiated	False	Cellosaurus CVCL_Q212 = Transformed cell line；EBV 转化	CVCL_Q212	Transformed cell line	AGREE
+HG01891	differentiated	False	Cellosaurus CVCL_Q491 = Transformed cell line；EBV 转化	CVCL_Q491	Transformed cell line	AGREE
+HG02559	differentiated	False	Cellosaurus 无条目（检索 0 命中）；compendium tissue='Lymphoblastoid (B-lymphocyte, EBV-transformed)'			NOT_FOUND
+HG04160	differentiated	False	Cellosaurus CVCL_GX82 = Transformed cell line；EBV 转化	CVCL_GX82	Transformed cell line	AGREE
+HG02074	differentiated	False	Cellosaurus CVCL_GV18 = Transformed cell line；EBV 转化	CVCL_GV18	Transformed cell line	AGREE
+HG03516	differentiated	False	Cellosaurus CVCL_GX10 = Transformed cell line；EBV 转化	CVCL_GX10	Transformed cell line	AGREE
+HG03942	differentiated	False	Cellosaurus CVCL_GX69 = Transformed cell line；EBV 转化	CVCL_GX69	Transformed cell line	AGREE
+HG01361	differentiated	False	Cellosaurus CVCL_Q215 = Transformed cell line；EBV 转化	CVCL_Q215	Transformed cell line	AGREE
+HG02132	differentiated	False	Cellosaurus CVCL_GV25 = Transformed cell line；EBV 转化	CVCL_GV25	Transformed cell line	AGREE
+HG02717	differentiated	False	Cellosaurus CVCL_GV70 = Transformed cell line；EBV 转化	CVCL_GV70	Transformed cell line	AGREE
+HG03804	differentiated	False	Cellosaurus CVCL_GX49 = Transformed cell line；EBV 转化	CVCL_GX49	Transformed cell line	AGREE
+HG04187	differentiated	False	Cellosaurus CVCL_GX86 = Transformed cell line；EBV 转化	CVCL_GX86	Transformed cell line	AGREE
+GM12878	differentiated	False	Cellosaurus CVCL_7526 = GM12878（Transformed，EBV，LCL）	CVCL_7526	Transformed cell line	AGREE
+HG02071	differentiated	False	Cellosaurus CVCL_GV17 = Transformed cell line；EBV 转化	CVCL_GV17	Transformed cell line	AGREE
+GM28572	differentiated	False	Cellosaurus CVCL_D6XZ = Finite cell line	CVCL_D6XZ	Finite cell line	AGREE
+GM25455	differentiated	False	Cellosaurus CVCL_BA16 = Transformed cell line；EBV 转化	CVCL_BA16	Transformed cell line	AGREE
+GM25456	differentiated	False	Cellosaurus CVCL_BA17 = Finite cell line	CVCL_BA17	Finite cell line	AGREE
+HG02257	differentiated	False	Cellosaurus CVCL_Q703 = Transformed cell line；EBV 转化	CVCL_Q703	Transformed cell line	AGREE
+HG01258	differentiated	False	Cellosaurus CVCL_Q181 = Transformed cell line；EBV 转化	CVCL_Q181	Transformed cell line	AGREE
+HG02135	differentiated	False	Cellosaurus CVCL_GV26 = Transformed cell line；EBV 转化	CVCL_GV26	Transformed cell line	AGREE
+HG01123	differentiated	False	Cellosaurus 无条目（检索 0 命中）；compendium tissue='Lymphoblastoid (B-lymphocyte, EBV-transformed)'			NOT_FOUND
+GM28570	differentiated	False	Cellosaurus CVCL_D6XY = Transformed cell line；EBV 转化	CVCL_D6XY	Transformed cell line	AGREE
+HG02886	differentiated	False	Cellosaurus CVCL_GW02 = Transformed cell line；EBV 转化	CVCL_GW02	Transformed cell line	AGREE
+HG02572	differentiated	False	Cellosaurus CVCL_GV38 = Transformed cell line；EBV 转化	CVCL_GV38	Transformed cell line	AGREE
+HG002	differentiated	False	Cellosaurus CVCL_1C78 = GM24385/HG002（Transformed，EBV，LCL）；与 GM27730 同 PGP 号 huAA53E0	CVCL_1C78	Transformed cell line	AGREE
+HG02486	differentiated	False	Cellosaurus 无条目（检索 0 命中）；compendium tissue='Lymphoblastoid (B-lymphocyte, EBV-transformed)'			NOT_FOUND
+Hap1	differentiated	False	Cellosaurus CVCL_Y019 = HAP1（KBM-7 衍生，近单倍体）	CVCL_Y019	Cancer cell line	AGREE
+Jurkat	differentiated	False	Cellosaurus CVCL_0065 = Jurkat（T 细胞白血病）	CVCL_0065	Cancer cell line	AGREE
+HepG2	differentiated	False	Cellosaurus CVCL_0027 = HepG2（肝细胞癌）	CVCL_0027	Cancer cell line	AGREE

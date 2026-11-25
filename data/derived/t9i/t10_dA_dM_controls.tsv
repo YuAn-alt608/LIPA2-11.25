@@ -1,0 +1,10 @@
+control	stratum	n	rho	lo	hi	p	note
+quartile_level	Q1	237	-0.09916633463082723				按 (hap1+hap2)/2 的 pa5 四分位
+quartile_level	Q2	236	-0.3994704816334728				按 (hap1+hap2)/2 的 pa5 四分位
+quartile_level	Q3	236	-0.2987579142454135				按 (hap1+hap2)/2 的 pa5 四分位
+quartile_level	Q4	237	-0.2928294681957743				按 (hap1+hap2)/2 的 pa5 四分位
+partial_nCpg_diff	all	946	-0.27766866024434245			0.0	控制 nCpg_hap1−nCpg_hap2
+common_cpg_only	all	946	-0.27668740646810924	-0.330485884244352	-0.2147273087722536		只用两条单倍型都测到的 CpG
+read_count_diff	all	946					未控制：轨道只有 percent.accessible 与每 CpG 甲基化值，无读长数
+effective_A_diff	all	946					A 位点数按参考序列两条 hap 相同（差=0）；被读长覆盖的 A 数取不到
+replicate_sample	all	946					仅 H1：H9 只有 combined CpG 轨道，无 hap 拆分

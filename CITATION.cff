@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this code or these tables, please cite the manuscript below."
+title: "Reliability-aware Fiber-seq readout of young LINE-1 (L1PA2) promoter accessibility in human pluripotent cells"
+abstract: >-
+  Copy-level Fiber-seq accessibility at L1PA2 5' UTRs, with an explicit measurement-reliability
+  framework: split-half and haplotype agreement, a readability rule, attenuation correction for
+  the correlation with an external anchor, and a noise-only simulation band.
+authors:
+  - family-names: Yuan
+    given-names: Zizheng
+    affiliation: "Doctoral Programme in Planetary Health Studies, University of Lisbon, Portugal"
+    email: yuan-zizheng@edu.ulisboa.pt
+    orcid: ""
+type: software
+license: MIT
+repository-code: "https://github.com/YuAn-alt608/LIPA2-11.25"
+keywords:
+  - LINE-1
+  - L1PA2
+  - Fiber-seq
+  - chromatin accessibility
+  - measurement reliability
+  - DNA methylation
+date-released: "2026-11-25"
