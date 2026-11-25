@@ -62,21 +62,20 @@ chk("未评估 2", "two could not be assessed", n_na, n_na == 2)
 chk("r_s_nz≤0 共 14", "14", n_le0, n_le0 == 14)
 
 # ---------- 2 Highlights / Abstract 口径 ----------
-chk("摘要 10/29 口径", "10 were readable and 29 measured but not readable",
-    "10 / 29", "10 were readable and 29 measured but not readable" in flat)
-chk("摘要 10/29/2", "10 were readable and 29 measured but not readable; two could not be assessed",
-    f"{n_rd}/{n_no}/{n_na}", "10 were readable and 29 measured but not readable; two could not be assessed" in flat)
+chk("摘要 10/29 口径", "10 supported copy-level reading, 29 had measurable signal",
+    "10 / 29", "10 supported copy-level reading, 29 had measurable signal" in flat)
+chk("摘要 10/29/2", "10 supported ... 29 ... two could not be assessed",
+    f"{n_rd}/{n_no}/{n_na}", "and two could not be assessed" in flat)
 
 # ---------- 3 阈值句 ----------
-m = re.search(r"among the (\d+) samples that pass the validity rule, cut-offs of "
-              r"([\d\.,\sand]+?) classify ([\d,\sand]+?) samples as readable", flat)
 s7 = pd.read_csv(os.path.join(T15, "t15_table_s7_threshold.tsv"), sep="\t")
-if m:
-    chk("阈值句分母", m.group(1), n_ph, int(m.group(1)) == 39 and n_ph == 39)
-    got = [int(x) for x in re.findall(r"\d+", m.group(3))]
-    chk("阈值句可读数", got, list(s7.readable), got == list(s7.readable))
-else:
-    chk("阈值句", "未匹配", "-", False)
+chk("阈值句分母", "39 samples that pass the validity rule",
+    n_ph, "39 samples that pass the validity rule" in flat and n_ph == 39)
+chk("阈值句稳定段", "0.50-0.667, 10 readable",
+    f"{list(s7[s7.threshold <= 0.667].readable)}",
+    "stable from 0.50 to 0.667, with 10 samples readable" in flat
+    and set(s7[s7.threshold <= 0.667].readable) == {10})
+chk("阈值句指向 Table S3", "Table S3", "-", "Table S3" in flat)
 
 # ---------- 4 Table 1 ----------
 body1 = [[c.text.strip() for c in r.cells] for r in T1.rows]
@@ -142,9 +141,14 @@ chk("L1PA2 DiD 12.3 (11.7–12.8)", "12.3 (11.7–12.8)", f"{r.did:.2f} ({r.did_
 
 # ---------- 7 逐样本与留一 ----------
 diffs = {r["sample"]: r["diff"] for _, r in ps.iterrows()}
-chk("逐样本 15.92 等", "15.92 / 14.47 / 13.09 / 8.76",
+chk("逐样本范围 8.76-15.92", "8.76 ... 15.92",
     "/".join(f"{diffs[s]:.2f}" for s in ("H1", "WTC-11", "H9", "GM27730")),
-    all(f"{diffs[s]:.2f}" in flat for s in ("H1", "WTC-11", "H9", "GM27730")))
+    "8.76" in flat and "15.92" in flat
+    and abs(diffs["GM27730"] - 8.76) < 5e-3 and abs(diffs["H1"] - 15.92) < 5e-3,
+    "中间两值 14.47/13.09 只进 Fig. 1e 源数据，不在正文")
+chk("逐样本 14.47 / 13.09 仍在源数据", "Fig. 1e",
+    f"{diffs['WTC-11']:.2f}/{diffs['H9']:.2f}",
+    abs(diffs["WTC-11"] - 14.47) < 5e-3 and abs(diffs["H9"] - 13.09) < 5e-3)
 loo = ps.did_after_loo.dropna()
 chk("留一 11.3–13.7", "11.3–13.7", f"{loo.min():.1f}–{loo.max():.1f}",
     f"{loo.min():.1f}–{loo.max():.1f}" in flat)
@@ -195,12 +199,35 @@ chk("quintiles", "−0.02, −0.09, −0.21, −0.22, −0.50", "-",
     "−0.02, −0.09, −0.21, −0.22 and −0.50" in flat)
 
 # ---------- 11 Data integrity ----------
-chk("复发叙述", "The same error recurred", "-", "The same error recurred" in flat)
-chk("52 轨 × 1,032 差值 0", "maximum difference 0", "-", "maximum difference 0" in flat)
-chk("246 抽检 7.1e-15", "246 spot checks, maximum difference 7.1×10⁻¹⁵", "-",
-    "246 spot checks" in flat)
-chk("后续抓取新规", "Every later fetch is now checked", "-",
-    "Every later fetch is now checked by recomputing" in flat)
+chk("246 窗 7.1e-15", "246 windows, maximum difference 7.1×10⁻¹⁵", "-",
+    "246 windows across families" in flat and "7.1×10⁻¹⁵" in flat)
+chk("排查日记已移出正文", "no debug narrative", "-",
+    "The same error recurred" not in flat and "stride equal to the thread count" not in flat)
+chk("行序问题只留一句", "permuted row order", "-",
+    "permuted row order across files" in flat)
+
+# ---------- 12 覆盖感知可靠度（r26） ----------
+cov = pd.read_csv(os.path.join(T15, "t15_table_s4_cov_summary.tsv"), sep="\t").iloc[0]
+chk("覆盖轨道样本 26（Table S4）", "26 rows with n_cov filled", int(cov.n_with_track),
+    int(cov.n_with_track) == 26,
+    "该数只出现在 Table S4 表注；正文只写 25 个可评估")
+chk("其中可评估 25", "25 assessable samples", int(cov.n_assessable),
+    int(cov.n_assessable) == 25 and "25 assessable samples" in flat)
+chk("双零拷贝有覆盖 56%", "56%", f"{cov.pct_both0_covered:.2f}%",
+    f"{cov.pct_both0_covered:.0f}% of the removed copies" in flat)
+chk("单样本 28-92%", "28–92% per sample",
+    f"{cov.frac_min*100:.0f}–{cov.frac_max*100:.0f}%",
+    f"{cov.frac_min*100:.0f}–{cov.frac_max*100:.0f}% per sample" in flat)
+chk("r_s_cov 0.00-0.21", "0.00–0.21", f"{cov.r_s_min:.2f}–{cov.r_s_max:.2f}",
+    f"lifts r_s to {cov.r_s_min:.2f}–{cov.r_s_max:.2f}" in flat)
+chk("r_s_cov 无一 ≤0", "none at or below zero", int(cov.n_le0),
+    int(cov.n_le0) == 0 and "none at or below zero" in flat)
+chk("r_s_cov 无一过阈", "none above the threshold", int(cov.n_ge_half),
+    int(cov.n_ge_half) == 0 and "none above the threshold" in flat)
+chk("r_full_cov 上限", "< 0.667", f"{cov.r_full_max:.3f}", bool(cov.r_full_max < 0.667),
+    "正文只说不越过阈值，数值在 Table S4 与 fig2_numbers.json")
+chk("Methods 定义 r_s_cov", "a third estimate, r_s_cov", "-",
+    "a third estimate, r_s_cov" in flat)
 
 # ---------- 12 图注与图号 ----------
 for k in ("Fig. 1", "Fig. 2", "Fig. 3", "Fig. S1", "Fig. S2", "Fig. S3", "Fig. S4", "Fig. S5"):

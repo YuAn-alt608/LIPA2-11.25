@@ -138,6 +138,95 @@ Rows: 11. Columns: 7.
 | `did_after_loo` |
 | `role` |
 
+## `t15/t15_hap_cov_L1PA2_41.tsv.gz`
+
+Rows: 1032. Columns: 83.
+
+| column |
+| --- |
+| `unit_id` |
+| `GM12878.hap1` |
+| `GM12878.hap2` |
+| `K562.hap1` |
+| `K562.hap2` |
+| `HepG2.hap1` |
+| `HepG2.hap2` |
+| `H1.hap1` |
+| `H1.hap2` |
+| `Hap1.hap1` |
+| `Hap1.hap2` |
+| `Hek293T.hap1` |
+| `Hek293T.hap2` |
+| `Jurkat.hap1` |
+| `Jurkat.hap2` |
+| `HG002.hap1` |
+| `HG002.hap2` |
+| `Panc1.hap1` |
+| `Panc1.hap2` |
+| `THP-1.hap1` |
+| `THP-1.hap2` |
+| `H9.hap1` |
+| `H9.hap2` |
+| `HG01123.hap1` |
+| `HG01123.hap2` |
+| `HG01258.hap1` |
+| `HG01258.hap2` |
+| `HG01358.hap1` |
+| `HG01358.hap2` |
+| `HG01361.hap1` |
+| `HG01361.hap2` |
+| `HG01891.hap1` |
+| `HG01891.hap2` |
+| `HG02071.hap1` |
+| `HG02071.hap2` |
+| `HG02074.hap1` |
+| `HG02074.hap2` |
+| `HG02132.hap1` |
+| `HG02132.hap2` |
+| `HG02135.hap1` |
+| `HG02135.hap2` |
+| `HG02257.hap1` |
+| `HG02257.hap2` |
+| `HG02486.hap1` |
+| `HG02486.hap2` |
+| `HG02559.hap1` |
+| `HG02559.hap2` |
+| `HG02572.hap1` |
+| `HG02572.hap2` |
+| `HG02717.hap1` |
+| `HG02717.hap2` |
+| `HG02886.hap1` |
+| `HG02886.hap2` |
+| `HG03516.hap1` |
+| `HG03516.hap2` |
+| `HG03804.hap1` |
+| `HG03804.hap2` |
+| `HG03942.hap1` |
+| `HG03942.hap2` |
+| `HG04160.hap1` |
+| `HG04160.hap2` |
+| `HG04187.hap1` |
+| `HG04187.hap2` |
+| `A549.hap1` |
+| `A549.hap2` |
+| `MCF-7.hap1` |
+| `MCF-7.hap2` |
+| `HCT116.hap1` |
+| `HCT116.hap2` |
+| `Caco-2.hap1` |
+| `Caco-2.hap2` |
+| `WTC-11.hap1` |
+| `WTC-11.hap2` |
+| `GM28572.hap1` |
+| `GM28572.hap2` |
+| `GM28570.hap1` |
+| `GM28570.hap2` |
+| `GM25456.hap1` |
+| `GM25456.hap2` |
+| `GM25455.hap1` |
+| `GM25455.hap2` |
+| `GM27730.hap1` |
+| `GM27730.hap2` |
 ## `t15/t15_pa5_hap_L1PA2_41.tsv.gz`
 
 Rows: 1032. Columns: 83.
@@ -323,6 +412,57 @@ Rows: 41. Columns: 23.
 | `lo` |
 | `hi` |
 
+## `t15/t15_table_s4_cov.tsv`
+
+Rows: 41. Columns: 27.
+
+| column |
+| --- |
+| `sample` |
+| `group` |
+| `batch` |
+| `n` |
+| `n_nz` |
+| `frac_both0` |
+| `nz_hap1` |
+| `nz_hap2` |
+| `med_pa5` |
+| `r_s_all` |
+| `r_s_nz` |
+| `rho_m_h1` |
+| `rho_m_h2` |
+| `phased` |
+| `note` |
+| `r_full` |
+| `r_full_lo` |
+| `r_full_hi` |
+| `readable` |
+| `rho_obs` |
+| `rho_corr` |
+| `lo` |
+| `hi` |
+| `n_cov` |
+| `frac_both0_covered` |
+| `r_s_cov` |
+| `r_full_cov` |
+## `t15/t15_table_s4_cov_summary.tsv`
+
+Rows: 1. Columns: 12.
+
+| column |
+| --- |
+| `n_with_track` |
+| `n_assessable` |
+| `n_both0` |
+| `n_both0_covered` |
+| `pct_both0_covered` |
+| `frac_min` |
+| `frac_max` |
+| `r_s_min` |
+| `r_s_max` |
+| `n_le0` |
+| `n_ge_half` |
+| `r_full_max` |
 ## `t15/t15_table_s7_threshold.tsv`
 
 Rows: 7. Columns: 9.

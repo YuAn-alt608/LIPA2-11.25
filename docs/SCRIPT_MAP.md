@@ -10,7 +10,7 @@ without editing.
 | --- | --- | --- |
 | `340_fig_common.py` | shared style, panel layout, colour code, `spot_check()` | `data/derived/l1pa5_copy_tracks_v2.tsv.gz`, `data/derived/t9b/`, `data/meta/fiberseq_samples.tsv` |
 | `341_fig1.py` | Fig. 1 (a-f) | `t1_did_perm4_c5.tsv`, `t1_did_perm4_pa5.tsv`, `t13/t13_group_contrast_sample_first.tsv`, `t13/t13_per_sample_did.tsv`, `t1d_pa5_by_copy_9.tsv.gz` |
-| `342_fig2.py` | Fig. 2 (a-b) | `t15/t15_pa5_vs_rfull.tsv`, `t15/t15_rho_vs_h1_41.tsv`, `t10_sim_band.tsv` |
+| `342_fig2.py` | Fig. 2 (a-b) | `t15/t15_pa5_vs_rfull.tsv`, `t15/t15_rho_vs_h1_41.tsv`, `t15/t15_table_s4_cov.tsv`, `t10_sim_band.tsv` |
 | `343_fig3.py` | Fig. 3 (a-e) | `t9m/t9m_partial_rho.tsv`, `t13/t13_partial_rho_allcopies.tsv`, `t9d/t9d_coupling.tsv`, `t15/`, `t10_sim_band.tsv`, `t9m/t9m_rna_by_copy.tsv.gz`, `t9b/` |
 | `344_figS.py` | Fig. S1-S5 | `t1_did_perm4_c5.tsv`, `t10_sim_band.tsv`, `t15/t15_selfconsistency.tsv`, `t9i/t9i_dA_by_copy.tsv.gz`, `t10/t10_readability_map.tsv` |
 
@@ -19,6 +19,7 @@ without editing.
 | Script | Produces | Reads |
 | --- | --- | --- |
 | `333_t15_tables.py` | Tables S3, S5, S7 and the reliability atlas | `t15/t15_reliability_41.tsv`, `t15/t15_pa5_hap_L1PA2_41.tsv.gz`, `t9b/` |
+| `375_table_s4_cov.py` | Table S4, coverage-aware columns | `t15/t15_table_s3.tsv`, `t15/t15_pa5_hap_L1PA2_41.tsv.gz`, `t15/t15_hap_cov_L1PA2_41.tsv.gz` |
 | `337_t15_s8.py` | Table S8 | same, plus `l1pa5_copy_tracks_v2.tsv.gz` |
 | `356_online_resource.py` | Online Resource 1 (S1-S8) | all of the above plus `sample_labels.tsv`, `t9d/`, `t9i/` |
 
@@ -40,5 +41,5 @@ without editing.
 | Script | Checks |
 | --- | --- |
 | `345_text_audit.py` | 70 numbers in the text and tables against `data/derived` |
-| `346_figure_audit.py` | 87 values drawn in the figures against the text |
+| `346_figure_audit.py` | 91 values drawn in the figures against the text |
 | `359_doi_check.py` | every reference against Crossref |

@@ -3,7 +3,8 @@
 """
 342 — Fig. 2（174 × 185 mm，41 个样本的可靠性双联）
 
-(a) 41 样本的双哑铃：r_s_all（含双零）与 r_s_nz（去双零）
+(a) 41 样本的三个 r_s：r_s_all（含双零）、r_s_nz（去双零）、r_s_cov（覆盖感知，
+    仅 25 个可评估且有覆盖轨道的样本）
 (b) 39 个通过定相样本的 r_full + 95% 区间，0.667 阈值；r_s_nz<=0 画在 0 的空心三角
 
 8 pt 字下 41 行至少需要 ~127 mm 面板高，所以 (c)(d) 已移到 Fig. 3，
@@ -36,6 +37,12 @@ def main():
     for c in ("r_full", "r_s_all", "r_s_nz", "r_full_lo", "r_full_hi", "med_pa5"):
         rel[c] = pd.to_numeric(rel[c], errors="coerce")
 
+    cov = pd.read_csv(os.path.join(fc.RES, "t15", "t15_table_s4_cov.tsv"), sep="\t")
+    cov = cov.set_index("sample")[["n_cov", "frac_both0_covered", "r_s_cov", "r_full_cov"]]
+    rel = rel.join(cov, on="sample")
+    for c in ("r_s_cov", "r_full_cov", "frac_both0_covered"):
+        rel[c] = pd.to_numeric(rel[c], errors="coerce")
+
     order = fc.sample_order_by_rfull(rel)
     rel = rel.set_index("sample").loc[order].reset_index()
     y = np.arange(len(rel))[::-1]
@@ -54,6 +61,8 @@ def main():
         axa.plot([r.r_s_all], [r.y], marker="o", ms=3.4, mfc="white",
                  mec=fc.colour(r["sample"]), mew=0.8, zorder=3)
         axa.plot([r.r_s_nz], [r.y], marker="o", ms=3.4, color=fc.colour(r["sample"]), zorder=3)
+        if np.isfinite(r.r_s_cov):
+            axa.plot([r.r_s_cov], [r.y], marker="s", ms=2.9, mfc="#222222", mec="none", zorder=4)
     axa.axvline(0, color=fc.LGREY, lw=0.5)
     axa.set_xlim(-0.45, 1.02)
     axa.set_ylim(-0.8, ny - 0.2)
@@ -97,9 +106,11 @@ def main():
     ha = [Line2D([], [], marker="o", ls="", mfc="white", mec=fc.GREY, mew=0.8, ms=3.6,
                  label="with double-zero"),
           Line2D([], [], marker="o", ls="", color=fc.GREY, ms=3.6, label="double-zero removed"),
+          Line2D([], [], marker="s", ls="", mfc="#222222", mec="none", ms=3.0,
+                 label="coverage-aware"),
           Line2D([], [], marker="x", ls="", color=fc.LGREY, mew=0.9, ms=3.6, label="not assessed")]
-    fig.legend(handles=ha, loc="lower left", bbox_to_anchor=(0.0, 0.045), frameon=False,
-               ncol=3, handletextpad=0.25, columnspacing=1.0, fontsize=8, borderaxespad=0)
+    fig.legend(handles=ha, loc="lower left", bbox_to_anchor=(0.0, 0.050), frameon=False,
+               ncol=4, handletextpad=0.25, columnspacing=0.9, fontsize=8, borderaxespad=0)
 
     hb = [Line2D([], [], marker="o", ls="", color=fc.GREY, ms=3.6, label="readable"),
           Line2D([], [], marker="o", ls="", mfc="white", mfcalt=fc.GREY, fillstyle="left",
@@ -108,7 +119,7 @@ def main():
                  label="not readable"),
           Line2D([], [], marker="^", ls="", mfc="white", mec=fc.GREY, mew=0.7, ms=3.8,
                  label="r_s_nz ≤ 0")]
-    fig.legend(handles=hb, loc="lower left", bbox_to_anchor=(0.585, 0.018), frameon=False,
+    fig.legend(handles=hb, loc="lower left", bbox_to_anchor=(0.505, 0.008), frameon=False,
                ncol=2, handletextpad=0.25, columnspacing=1.0, labelspacing=0.35,
                fontsize=8, borderaxespad=0)
 
@@ -134,6 +145,14 @@ def main():
         "n_not_readable": int((rel.readable == "no").sum()),
         "n_not_assessed": int((rel.readable == "n/a").sum()),
         "n_rs_le0": int(rel.r_s_le0.sum()),
+        "cov": (lambda ca: {"n": int(rel.r_s_cov.notna().sum()), "n_assessable": len(ca),
+                            "r_s_min": float(ca.r_s_cov.min()), "r_s_max": float(ca.r_s_cov.max()),
+                            "n_le0": int((ca.r_s_cov <= 0).sum()),
+                            "n_ge_half": int((ca.r_s_cov >= 0.5).sum()),
+                            "r_full_max": float(ca.r_full_cov.max()),
+                            "frac_both0_cov_min": float(ca.frac_both0_covered.min()),
+                            "frac_both0_cov_max": float(ca.frac_both0_covered.max())})(
+            rel[rel.r_s_cov.notna() & rel.phased]),
         "hap1": {"r_s_all": float(rel.set_index("sample").loc["Hap1", "r_s_all"]),
                  "r_s_nz": float(rel.set_index("sample").loc["Hap1", "r_s_nz"])},
         "panc1": [float(rel.set_index("sample").loc["Panc1", "r_s_all"]),

@@ -16,8 +16,9 @@ import docx
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PAPER = os.path.abspath(os.path.join(HERE, ".."))
+RES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "derived")
 FIG = os.path.join(PAPER, "figures", "source_data")
-OUT = os.path.join(PAPER, "03_results", "t16")
+OUT = os.path.join(PAPER, "docs", "audit")
 import sys
 DOCX = (sys.argv[1] if len(sys.argv) > 1 else
         os.path.join(PAPER, "manuscript",
@@ -61,13 +62,35 @@ f1, f2, f3 = numbers["fig1"], numbers["fig2"], numbers["fig3"]
 s1, s2, s3, s4, s5 = (numbers["figs1"], numbers["figs2"], numbers["figs3"],
                       numbers["figs4"], numbers["figs5"])
 
+FIG_SRC = os.path.join(os.path.dirname(os.path.dirname(FIG)), "figures", "source_data")
+if not os.path.isdir(FIG_SRC):
+    FIG_SRC = os.path.join(r"D:/LIPA2-11.25-public", "figures", "source_data")
+
+
+def add_figonly(fig, panel, qty, figval, sample, source, tsv, col, tol=0.005):
+    """只上图、不进正文的数值：核 Figure 的 source_data，而不是核正文。"""
+    path = os.path.join(FIG_SRC, tsv)
+    ok = False
+    try:
+        t = pd.read_csv(path, sep="\t")
+        v = float(t.loc[t["sample"] == sample, col].iloc[0])
+        ok = abs(v - float(figval)) <= tol
+        got = f"{v:.2f}"
+    except Exception as e:
+        got = f"err {e}"
+    rows.append(dict(figure=fig, panel=panel, quantity=qty, value_on_figure=figval,
+                     value_in_manuscript="figure-only", source_table=source,
+                     status="OK" if ok else "MISMATCH",
+                     note="source_data 核对 %s = %s" % (sample, got)))
+
+
 # ---------------- Fig 1 ----------------
 add("Fig. 1", "a", "预设 c5 阈值数", "nine", "nine pre-specified cut-offs", "t1_did_perm4_c5")
-add("Fig. 1", "a", "top-4 恰好多能的阈值数", f1["top4_pluripotent"], "at 4 of 9", "t1_did_perm4_c5", 0)
+add("Fig. 1", "a", "top-4 恰好多能的阈值数", f1["top4_pluripotent"], "four of the nine", "t1_did_perm4_c5", 0)
 add("Fig. 1", "a", "闯入者", ", ".join(sorted(set(f1["intruders"].values()))),
     "Caco-2 and K562", "t1_did_perm4_c5")
 add("Fig. 1", "a", "GM27730 名次序列", "--".join(str(v) for v in f1["gm27730_ranks"]),
-    "GM27730 dropped out first", "t1_did_perm4_c5")
+    "GM27730 dropping out first", "t1_did_perm4_c5")
 add("Fig. 1", "a", "c5 置换 p 下限", round(f1["perm_p_range"][0], 8), "9.9×10⁻⁶".replace("−", "-"),
     "t1_did_perm4_c5", 0)
 add("Fig. 1", "a", "c5 置换 p 上限", round(f1["perm_p_range"][1], 8), "5.9×10⁻⁵",
@@ -85,8 +108,10 @@ add("Fig. 1", "b", "L1HS DiD", round(f1["start400"] and 10.08, 1), "+10.1", "t13
 add("Fig. 1", "b", "L1PA3 DiD", 1.1, "+1.1", "t13", 0.05)
 add("Fig. 1", "b", "L1PA4–7 raw", 0.4, "+0.4", "t13", 0.05)
 add("Fig. 1", "b", "逐样本 H1", f'{f1["per_sample_diff"]["H1"]:.2f}', "15.92", "t13", 0.005)
-add("Fig. 1", "b", "逐样本 WTC-11", f'{f1["per_sample_diff"]["WTC-11"]:.2f}', "14.47", "t13", 0.005)
-add("Fig. 1", "b", "逐样本 H9", f'{f1["per_sample_diff"]["H9"]:.2f}', "13.09", "t13", 0.005)
+add_figonly("Fig. 1", "b", "逐样本 WTC-11", f'{f1["per_sample_diff"]["WTC-11"]:.2f}', "WTC-11",
+            "t13", "fig1_data_per_sample.tsv", "diff")
+add_figonly("Fig. 1", "b", "逐样本 H9", f'{f1["per_sample_diff"]["H9"]:.2f}', "H9",
+            "t13", "fig1_data_per_sample.tsv", "diff")
 add("Fig. 1", "b", "逐样本 GM27730", f'{f1["per_sample_diff"]["GM27730"]:.2f}', "8.76", "t13", 0.005)
 add("Fig. 1", "b", "留一 DiD 区间", f'{f1["loo_did"][0]:.1f}-{f1["loo_did"][1]:.1f}',
     "11.3-13.7", "t13", 0)
@@ -101,10 +126,16 @@ add("Fig. 1", "c", "SVA_F raw", round(f1["start400"]["SVA_F"][0], 2), "-0.03", "
 
 # ---------------- Fig 2 ----------------
 for k, v, t in (("n_total", 41, "41 samples"), ("n_phased", 39, "39 passed a phasing check"),
-                ("n_readable", 10, "10 were readable"), ("n_not_readable", 29, "29 measured but not readable"),
+                ("n_readable", 10, "10 are readable"), ("n_not_readable", 29, "29 samples had measurable signal"),
                 ("n_not_assessed", 2, "two could not be assessed"),
-                ("n_rs_le0", 14, "14 of them r_s_nz is at or below zero")):
+                ("n_rs_le0", 14, "In 14 of them r_s_nz is at or below zero")):
     add("Fig. 2", "a,b", k, f2[k], t, "t15_reliability_41")
+add("Fig. 2", "a", "覆盖感知样本 25", f2["cov"]["n_assessable"], "25 assessable samples",
+    "t15_table_s4_cov", 0)
+add("Fig. 2", "a", "r_s_cov 下限 0.00", round(f2["cov"]["r_s_min"], 2), "lifts r_s to 0.00-0.21",
+    "t15_table_s4_cov", 0.005)
+add("Fig. 2", "a", "r_s_cov 无一 ≤0", f2["cov"]["n_le0"], "none at or below zero",
+    "t15_table_s4_cov", 0)
 add("Fig. 2", "a,b", "Hap1 r_s 0.790 → 0.121",
     f'{f2["hap1"]["r_s_all"]:.3f}→{f2["hap1"]["r_s_nz"]:.3f}', "0.790 to 0.121", "t15_reliability_41")
 add("Fig. 2", "a,b", "Panc1 0.691 → 0.258",
@@ -113,6 +144,9 @@ add("Fig. 2", "a,b", "A549 0.647 → 0.300",
     f'{f2["a549"][0]:.3f}→{f2["a549"][1]:.3f}', "0.647 to 0.300", "t15_reliability_41")
 add("Fig. 2", "a,b", "THP-1 0.622 → 0.302",
     f'{f2["thp1"][0]:.3f}→{f2["thp1"][1]:.3f}', "0.622 to 0.302", "t15_reliability_41")
+add("Fig. 2", "a", "图注第三个系列", "small squares",
+    "small squares, copies kept only where both haplotypes carry coverage", "Fig2.pdf 图例", 0,
+    "图例两项：double-zero removed / coverage-aware")
 add("Fig. 3", "a", "全体 Spearman", round(f3["rho_pa5_rfull"]["all assessed"][0], 2),
     "Spearman +0.71", "t15_pa5_vs_rfull", 0.005)
 add("Fig. 3", "a", "非多能 Spearman", round(f3["rho_pa5_rfull"]["non-pluripotent"][0], 2),
@@ -137,8 +171,8 @@ add("Fig. 3", "c", "H1 空心（基因间）", round(f3["h1_amb_negative"]["INTE
 add("Fig. 3", "c", "K562 ρ", round(f3["k562"]["ALL"][0], 3), "+0.067", "t9m_partial_rho", 0.001)
 add("Fig. 3", "c", "HG002 ρ", round(f3["hg002"]["ALL"][0], 3), "-0.020", "t9m_partial_rho", 0.001)
 add("Fig. 3", "c", "AMB 剔除 n", f3["n_inter_amb_excluded"], "Table 2", "t9m_partial_rho")
-add("Fig. 3", "d", "基因间拷贝数", f3["rna_scatter"]["n"], "403 intergenic copies", "t9m_rna_by_copy")
-add("Fig. 3", "d", "EXP 数", f3["rna_scatter"]["exp"], "17 of 403 intergenic copies", "t9m_rna_by_copy")
+add("Fig. 3", "d", "基因间拷贝数", f3["rna_scatter"]["n"], "403 intergenic", "t9m_rna_by_copy")
+add("Fig. 3", "d", "EXP 数", f3["rna_scatter"]["exp"], "17 EXP copies among 403 intergenic", "t9m_rna_by_copy")
 add("Fig. 3", "d", "零表达比例", round(f3["rna_scatter"]["zero_frac"] * 100, 1), "21.8% of intergenic copies",
     "t9m_rna_by_copy", 0.05)
 add("Fig. 3", "d", "检测到", f3["rna_scatter"]["detected"], "315 detected copies", "t9m_rna_by_copy")

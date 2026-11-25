@@ -6,7 +6,7 @@ the text cannot be found in a table or disagrees after rounding.
 
 ## 345 — text and tables versus data
 
-Seventy-one checks. Each is a triple (location in the manuscript, expected value, source table
+Eighty checks. Each is a triple (location in the manuscript, expected value, source table
 and column). The script extracts the value from the DOCX, recomputes it from the deposited table,
 and compares within the rounding used in the text.
 
@@ -14,17 +14,18 @@ Coverage: Table 1 (rho_obs, rho_corr and intervals), Table 2 ranges, the stabili
 count between 0.50 and 0.667 (Table S3 holds all seven thresholds), the group contrasts
 (+0.71 / +0.59 / +0.90), the 14 cells with r_s_nz <= 0, the phasing diagnostics (including
 GM12878 hap2 at 28.0%), the allele-level correlations, and the per-sample values quoted in the
-Results.
+Results, and the coverage-aware reliability figures added in r26 (26 samples with a coverage
+track, 25 assessable, 56% of removed copies covered on both haplotypes).
 
-Last run against the deposited manuscript: **71 checks, 0 mismatch**.
+Last run against the deposited manuscript: **80 checks, 0 mismatch**.
 
 ## 346 — figures versus text
 
-Eighty-seven checks. The values a figure draws are written by the plotting script to
+Ninety-one checks. The values a figure draws are written by the plotting script to
 `figures/source_data/fig*_numbers.json`; this script matches every one of them against the text.
 It is the check that catches a panel and a sentence drifting apart after an edit.
 
-Last run against the deposited manuscript: **87 checks, 0 mismatch**.
+Last run against the deposited manuscript: **91 checks, 0 mismatch**.
 
 ## Known limitation
 
@@ -34,9 +35,10 @@ needs the raw tracks. The independent guard for that step is inside `340_fig_com
 the deposited table at every figure build.
 
 pa5 is a mean over a fixed 1,000-bp window, so a window with no fibre coverage is scored as zero
-in the same way as a window measured as closed. Nothing in the deposited tables separates those
-two cases; the coverage tracks do, and that recomputation is the one piece of work listed under
-"Open items" below.
+in the same way as a window measured as closed. The coverage tracks separate the two cases, and
+`t15_table_s4_cov.tsv` reports the split-half correlation obtained when a copy is kept on coverage
+rather than removed for being double-zero; the limitation applies to the 15 samples that carry no
+coverage track, where the two cases remain indistinguishable.
 
 ## Earlier row-order fault, kept for the record
 
@@ -53,11 +55,14 @@ became uncorrelated, and the 26 samples were re-fetched value-by-value. The manu
 only the resulting validation, because this is an engineering history rather than a property of
 the measurement.
 
-## Open items
+## Coverage-aware reliability (deposited in r26)
 
-The coverage-aware recomputation of split-half reliability (`r_s_cov`, copies retained when both
-haplotype tracks have covered bases) is not yet deposited. It can be computed for the 25 samples
-that carry a coverage track; for the four samples that moved from readable to not readable
-(Panc1, A549, THP-1, HG002) no coverage track exists, so the manuscript reports only the bound
-that up to three of them would return to readable if their double-zero copies are closed rather
-than unphased.
+`t15_table_s4_cov.tsv` adds four columns to the atlas: the number of copies covered on both
+haplotypes, the fraction of double-zero copies that carry such coverage, and the split-half
+correlation `r_s_cov` with its Spearman-Brown value. For the 25 assessable samples that carry a
+coverage track, `r_s_cov` runs from 0.001 to 0.209 with none at or below zero and none above 0.5,
+so the readable classification does not change and the negative values in the double-zero column
+are a property of the estimator rather than of the tracks. The four samples that moved from
+readable to not readable (Panc1, A549, THP-1, HG002) carry no coverage track, so for them the
+manuscript reports only the bound: up to three would return to readable if their double-zero
+copies are closed rather than unphased.
