@@ -206,28 +206,54 @@ chk("排查日记已移出正文", "no debug narrative", "-",
 chk("行序问题只留一句", "permuted row order", "-",
     "permuted row order across files" in flat)
 
-# ---------- 12 覆盖感知可靠度（r26） ----------
+# ---------- 12 覆盖感知可靠度（r27：15 个早期样本补齐，41 个全有轨道） ----------
 cov = pd.read_csv(os.path.join(T15, "t15_table_s4_cov_summary.tsv"), sep="\t").iloc[0]
-chk("覆盖轨道样本 26（Table S4）", "26 rows with n_cov filled", int(cov.n_with_track),
-    int(cov.n_with_track) == 26,
-    "该数只出现在 Table S4 表注；正文只写 25 个可评估")
-chk("其中可评估 25", "25 assessable samples", int(cov.n_assessable),
-    int(cov.n_assessable) == 25 and "25 assessable samples" in flat)
-chk("双零拷贝有覆盖 56%", "56%", f"{cov.pct_both0_covered:.2f}%",
-    f"{cov.pct_both0_covered:.0f}% of the removed copies" in flat)
-chk("单样本 28-92%", "28–92% per sample",
+s4c = pd.read_csv(os.path.join(T15, "t15_table_s4_cov.tsv"), sep="\t")
+for _c in ("r_s_cov", "r_full_cov", "frac_both0_covered"):
+    s4c[_c] = pd.to_numeric(s4c[_c], errors="coerce")
+assess = s4c[s4c.n_cov.notna() & (s4c.phased == True)]  # noqa: E712
+notread = assess[assess.readable == "no"]
+lcl = assess[assess.group == "other (LCL)"]
+readable_ = assess[assess.readable == "yes"]
+four = assess[assess["sample"].isin(["A549", "Panc1", "THP-1", "HG002"])]
+
+chk("覆盖轨道 41 样本（Table S4）", "41 rows with n_cov filled", int(cov.n_with_track),
+    int(cov.n_with_track) == 41,
+    "15 个早期样本的 hap 覆盖由 381 补齐，逐条与 t9b 的 pa5 对齐到 1e-15")
+chk("其中可评估 39", "all 39 assessable samples", int(cov.n_assessable),
+    int(cov.n_assessable) == 39 and "all 39 assessable samples" in flat)
+chk("双零拷贝有覆盖 27.8%", "27.8%", f"{cov.pct_both0_covered:.1f}%",
+    f"{cov.pct_both0_covered:.1f}% of the removed copies" in flat)
+chk("单样本 2-92%", "2–92% per sample",
     f"{cov.frac_min*100:.0f}–{cov.frac_max*100:.0f}%",
-    f"{cov.frac_min*100:.0f}–{cov.frac_max*100:.0f}% per sample" in flat)
-chk("r_s_cov 0.00-0.21", "0.00–0.21", f"{cov.r_s_min:.2f}–{cov.r_s_max:.2f}",
-    f"lifts r_s_cov to {cov.r_s_min:.2f}–{cov.r_s_max:.2f}" in flat)
+    f"({cov.frac_min*100:.0f}–{cov.frac_max*100:.0f}% per sample)" in flat)
+chk("不可读 r_s_cov 0.001-0.34", "0.001–0.34",
+    f"{notread.r_s_cov.min():.3f}–{notread.r_s_cov.max():.2f}",
+    f"r_s_cov {notread.r_s_cov.min():.3f}–{notread.r_s_cov.max():.2f}" in flat)
+chk("不可读 r_full_cov 上限 0.51", "at most 0.51", f"{notread.r_full_cov.max():.2f}",
+    f"r_full_cov at most {notread.r_full_cov.max():.2f}" in flat)
+chk("LCL r_s_cov 0.001-0.14", "0.001–0.14",
+    f"{lcl.r_s_cov.min():.3f}–{lcl.r_s_cov.max():.2f}",
+    f"lines stay at {lcl.r_s_cov.min():.3f}–{lcl.r_s_cov.max():.2f}" in flat)
+chk("可读 r_s_cov 0.60-0.89", "0.60–0.89",
+    f"{readable_.r_s_cov.min():.2f}–{readable_.r_s_cov.max():.2f}",
+    f"leaves the readable ten at {readable_.r_s_cov.min():.2f}–{readable_.r_s_cov.max():.2f}" in flat)
+chk("四株双零有覆盖 2-9%", "2–9%",
+    f"{four.frac_both0_covered.min()*100:.0f}–{four.frac_both0_covered.max()*100:.0f}%",
+    f"{four.frac_both0_covered.min()*100:.0f}–{four.frac_both0_covered.max()*100:.0f}% of their "
+    "double-zero copies" in flat)
+chk("四株仍低于阈值", "< 0.667", f"{four.r_full_cov.max():.3f}",
+    bool(four.r_full_cov.max() < 0.667),
+    "正文不列四株的 r_full_cov 值，只给双零覆盖率；值见 Table S4")
 chk("r_s_cov 无一 ≤0", "none at or below zero", int(cov.n_le0),
     int(cov.n_le0) == 0 and "none at or below zero" in flat)
-chk("r_s_cov 无一过阈", "none above the threshold", int(cov.n_ge_half),
-    int(cov.n_ge_half) == 0 and "none above the threshold" in flat)
-chk("r_full_cov 上限", "< 0.667", f"{cov.r_full_max:.3f}", bool(cov.r_full_max < 0.667),
-    "正文只说不越过阈值，数值在 Table S4 与 fig2_numbers.json")
-chk("Methods 定义 r_s_cov", "a third estimate, r_s_cov", "-",
-    "a third estimate, r_s_cov" in flat)
+chk("不可读无一过阈", "none above the threshold", round(float(notread.r_s_cov.max()), 3),
+    bool(notread.r_s_cov.max() < 0.5) and "none above the threshold" in flat,
+    "10 个过 0.5 的样本全是可读样本")
+chk("Methods 定义 r_s_cov", "A third estimate, r_s_cov", "-",
+    "A third estimate, r_s_cov" in flat and "for all 41 samples" in flat)
+chk("Limitations 不再说无轨道", "no coverage track exists", "-",
+    "no coverage track exists" not in flat and "up to three" not in flat)
 
 # ---------- 12 图注与图号 ----------
 for k in ("Fig. 1", "Fig. 2", "Fig. 3", "Fig. S1", "Fig. S2", "Fig. S3", "Fig. S4", "Fig. S5"):

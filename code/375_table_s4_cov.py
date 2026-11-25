@@ -10,7 +10,8 @@
   r_s_cov            只保留 n_cov 这些拷贝时的 Spearman r_s
   r_full_cov         r_s_cov 的 Spearman–Brown 校正值
 
-只有 26 个样本有 hap 覆盖轨道（25 个可评估样本 + GM12878），其余 15 行为空。
+r27 起 41 个样本都有 hap 覆盖轨道（381 补齐 15 个早期样本），其中 39 个可评估；
+Hap1 与 GM12878 有覆盖但不可评估，四列照算、照填。
 输出：03_results/t15/t15_table_s4_cov.tsv
 """
 import os

@@ -19,6 +19,7 @@ without editing.
 | Script | Produces | Reads |
 | --- | --- | --- |
 | `333_t15_tables.py` | Tables S3, S5, S7 and the reliability atlas | `t15/t15_reliability_41.tsv`, `t15/t15_pa5_hap_L1PA2_41.tsv.gz`, `t9b/` |
+| `381_fetch_cov15.py` | haplotype `covered_bp` for the 15 early samples (aligned to the deposited pa5) | `data/meta/fiberseq_samples.tsv`, `t9b/t9b_pa5_hap_L1PA2_fixed.tsv.gz` |
 | `375_table_s4_cov.py` | Table S4, coverage-aware columns | `t15/t15_table_s3.tsv`, `t15/t15_pa5_hap_L1PA2_41.tsv.gz`, `t15/t15_hap_cov_L1PA2_41.tsv.gz` |
 | `337_t15_s8.py` | Table S8 | same, plus `l1pa5_copy_tracks_v2.tsv.gz` |
 | `356_online_resource.py` | Online Resource 1 (S1-S8) | all of the above plus `sample_labels.tsv`, `t9d/`, `t9i/` |
@@ -40,6 +41,6 @@ without editing.
 
 | Script | Checks |
 | --- | --- |
-| `345_text_audit.py` | 70 numbers in the text and tables against `data/derived` |
+| `345_text_audit.py` | 85 numbers in the text and tables against `data/derived` |
 | `346_figure_audit.py` | 91 values drawn in the figures against the text |
 | `359_doi_check.py` | every reference against Crossref |

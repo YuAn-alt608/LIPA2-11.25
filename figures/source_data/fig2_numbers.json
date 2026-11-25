@@ -8,14 +8,14 @@
  "n_not_assessed": 2,
  "n_rs_le0": 14,
  "cov": {
-  "n": 26,
-  "n_assessable": 25,
+  "n": 41,
+  "n_assessable": 39,
   "r_s_min": 0.0014,
-  "r_s_max": 0.2085,
+  "r_s_max": 0.8855,
   "n_le0": 0,
-  "n_ge_half": 0,
-  "r_full_max": 0.3451,
-  "frac_both0_cov_min": 0.2778,
+  "n_ge_half": 10,
+  "r_full_max": 0.9393,
+  "frac_both0_cov_min": 0.0198,
   "frac_both0_cov_max": 0.9186
  },
  "hap1": {

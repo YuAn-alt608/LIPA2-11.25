@@ -25,6 +25,7 @@ Offline: `LIPA2_SKIP_SPOTCHECK=1` skips the remote bigWig spot check.
 
 ```
 python 333_t15_tables.py      # Tables S3, S5, S7 (+ the atlas behind S4)
+python 381_fetch_cov15.py     # haplotype coverage tracks for the 15 early samples
 python 375_table_s4_cov.py    # Table S4 with the coverage-aware columns
 python 337_t15_s8.py          # Table S8
 python 356_online_resource.py # assembles Tables S1-S8 into one xlsx
@@ -35,7 +36,7 @@ python 356_online_resource.py # assembles Tables S1-S8 into one xlsx
 ## 3. Audits
 
 ```
-python 345_text_audit.py      # 80 checks: text and tables vs data/derived
+python 345_text_audit.py      # 85 checks: text and tables vs data/derived
 python 346_figure_audit.py    # 91 checks: *_numbers.json vs text
 ```
 

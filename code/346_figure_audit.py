@@ -130,10 +130,10 @@ for k, v, t in (("n_total", 41, "41 samples"), ("n_phased", 39, "39 passed a pha
                 ("n_not_assessed", 2, "two could not be assessed"),
                 ("n_rs_le0", 14, "In 14 of them r_s_nz is at or below zero")):
     add("Fig. 2", "a,b", k, f2[k], t, "t15_reliability_41")
-add("Fig. 2", "a", "覆盖感知样本 25", f2["cov"]["n_assessable"], "25 assessable samples",
+add("Fig. 2", "a", "覆盖感知样本 39", f2["cov"]["n_assessable"], "all 39 assessable samples",
     "t15_table_s4_cov", 0)
-add("Fig. 2", "a", "r_s_cov 下限 0.00", round(f2["cov"]["r_s_min"], 2), "lifts r_s_cov to 0.00-0.21",
-    "t15_table_s4_cov", 0.005)
+add("Fig. 2", "a", "LCL r_s_cov 下限 0.001", round(f2["cov"]["r_s_min"], 3),
+    "stay at 0.001-0.14", "t15_table_s4_cov", 0.0005)
 add("Fig. 2", "a", "r_s_cov 无一 ≤0", f2["cov"]["n_le0"], "none at or below zero",
     "t15_table_s4_cov", 0)
 add("Fig. 2", "a,b", "Hap1 r_s 0.790 → 0.121",
