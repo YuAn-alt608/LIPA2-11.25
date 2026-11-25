@@ -219,7 +219,7 @@ chk("单样本 28-92%", "28–92% per sample",
     f"{cov.frac_min*100:.0f}–{cov.frac_max*100:.0f}%",
     f"{cov.frac_min*100:.0f}–{cov.frac_max*100:.0f}% per sample" in flat)
 chk("r_s_cov 0.00-0.21", "0.00–0.21", f"{cov.r_s_min:.2f}–{cov.r_s_max:.2f}",
-    f"lifts r_s to {cov.r_s_min:.2f}–{cov.r_s_max:.2f}" in flat)
+    f"lifts r_s_cov to {cov.r_s_min:.2f}–{cov.r_s_max:.2f}" in flat)
 chk("r_s_cov 无一 ≤0", "none at or below zero", int(cov.n_le0),
     int(cov.n_le0) == 0 and "none at or below zero" in flat)
 chk("r_s_cov 无一过阈", "none above the threshold", int(cov.n_ge_half),
