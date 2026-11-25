@@ -1,0 +1,9 @@
+# keep scripts and manifests byte-stable across platforms
+* text=auto eol=lf
+SHA256SUMS.txt -text
+*.docx binary
+*.xlsx binary
+*.pdf binary
+*.png binary
+*.eps binary
+*.gz binary
