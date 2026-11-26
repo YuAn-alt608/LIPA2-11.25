@@ -360,6 +360,13 @@ for k in ("Fig. 1", "Fig. 2", "Fig. 3", "Fig. S1", "Fig. S2", "Fig. S3", "Fig. S
     chk(f"图注 {k}", "存在", "-",
         any(re.match(r"^" + re.escape(k) + r"(\s|$)", p) for p in paras))
 chk("Fig. 2 覆盖 41", "all 41 samples", "-", "for all 41 samples" in flat)
+# 图注都要有句末句号（原来四条补充图注漏了）
+_caps = [p for p in paras if re.match(r"^Fig\.\s?S?\d+\s", p)]
+_bad = [p[:28] for p in _caps if not p.rstrip().endswith((".", "。"))]
+chk("全部图注以句号结尾", "0 条缺句号", len(_bad), not _bad, str(_bad))
+# Hap1 的 0.79→0.121 不在 Fig. 2a 上（它只画成叉），引图处要说明
+chk("Hap1 引图已说明只画叉", "Hap1 appears there only as a cross", "-",
+    "Hap1 appears there only as a cross, because it is not assessable" in flat)
 chk("Fig. 2b 39", "39 samples that pass the validity rule", "-",
     "r_full,cov with 95% intervals for the 39 samples" in flat)
 chk("Fig. 3a 与正文一致（+0.70）", "+0.70", "-", "pass the validity rule (Spearman +0.70)" in flat)

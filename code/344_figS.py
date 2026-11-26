@@ -153,7 +153,9 @@ def fig_s3():
     axa.text(0.507, len(rel) - 0.55, "0.5", fontsize=8, color=fc.GREY, va="top")
     axa.set_yticks(rel.y)
     axa.set_yticklabels(rel["sample"], fontsize=8)
-    axa.tick_params(axis="y", length=0, pad=1)
+    # 有 11 个样本的 frac_nocov 只有 0.005–0.01，圆点几乎贴在轴线上，
+    # pad 太小会让圆点和左侧标签看起来连在一起
+    axa.tick_params(axis="y", length=0, pad=4)
     axa.set_xlim(0, 1.0)
     axa.set_ylim(-0.8, len(rel) - 0.2)
     axa.set_xticks([0, 0.5, 1.0])
