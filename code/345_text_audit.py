@@ -367,6 +367,12 @@ chk("全部图注以句号结尾", "0 条缺句号", len(_bad), not _bad, str(_b
 # Hap1 的 0.79→0.121 不在 Fig. 2a 上（它只画成叉），引图处要说明
 chk("Hap1 引图已说明只画叉", "Hap1 appears there only as a cross", "-",
     "Hap1 appears there only as a cross, because it is not assessable" in flat)
+# 0.003–0.51 是 r_full,cov 的范围（这 29 个的 r_s_cov 最大只有 0.34）
+_nr = s4c[(s4c.phased == True) & (~s4c.readable.isin(["yes", "borderline"]))]  # noqa: E712
+chk("29 个不可读的 r_full,cov 0.003–0.51", "0.003–0.51 in r_full,cov",
+    f"{_nr.r_full_cov.min():.3f}–{_nr.r_full_cov.max():.2f}",
+    abs(_nr.r_full_cov.min() - 0.003) < 0.0005 and abs(_nr.r_full_cov.max() - 0.51) < 0.005
+    and "0.003–0.51 in r_full,cov" in flat)
 chk("Fig. 2b 39", "39 samples that pass the validity rule", "-",
     "r_full,cov with 95% intervals for the 39 samples" in flat)
 chk("Fig. 3a 与正文一致（+0.70）", "+0.70", "-", "pass the validity rule (Spearman +0.70)" in flat)

@@ -106,6 +106,7 @@ Hap1 每条轨道 8% 非零	8% of copies	8.1% / 8.1%	OK
 Fig. 2 覆盖 41	all 41 samples	-	OK	
 全部图注以句号结尾	0 条缺句号	0	OK	[]
 Hap1 引图已说明只画叉	Hap1 appears there only as a cross	-	OK	
+29 个不可读的 r_full,cov 0.003–0.51	0.003–0.51 in r_full,cov	0.003–0.51	OK	
 Fig. 2b 39	39 samples that pass the validity rule	-	OK	
 Fig. 3a 与正文一致（+0.70）	+0.70	-	OK	
 Fig. S3 是 31 格	31 cells	-	OK	
