@@ -193,10 +193,12 @@ for s, a, b in (("Hap1", 0.790, 0.121), ("Panc1", 0.691, 0.258), ("A549", 0.647,
     chk(f"{s} r_s {a}→{b}", f"{a}/{b}",
         f"{h.loc[s,'r_s_all']:.3f}/{h.loc[s,'r_s_nz']:.3f}", ok)
 lcl = rel[rel.group == "other (LCL)"]
-chk("25 个 LCL 的 r_s_nz 区间", "−0.20 到 +0.10",
-    f"{lcl.r_s_nz.min():.2f} 到 {lcl.r_s_nz.max():.2f}",
-    f"{lcl.r_s_nz.min():.2f}" in flat.replace("−", "-") or True,
-    f"实际 {lcl.r_s_nz.min():.3f} 到 {lcl.r_s_nz.max():.3f}")
+_lcl_cov = pd.read_csv(os.path.join(T15, "t15_table_s4_cov.tsv"), sep="\t")
+_lcl_cov = _lcl_cov[(_lcl_cov.group == "other (LCL)") & (_lcl_cov.phased == True)]  # noqa: E712
+chk("25 个 LCL 的 r_s_cov ≤0.14", "at most 0.14",
+    f"{_lcl_cov.r_s_cov.max():.3f}",
+    abs(_lcl_cov.r_s_cov.max() - 0.14) <= 0.005
+    and "reaches at most 0.14 under coverage" in flat)
 # r29：正文改报规则实际检验的量（两 hap 均无覆盖），不再报双零
 _s4h = pd.read_csv(os.path.join(T15, "t15_table_s4_cov.tsv"), sep="\t").set_index("sample")
 chk("Hap1 无覆盖 88.3%", "88.3%", f"{_s4h.loc['Hap1', 'frac_nocov']*100:.1f}%",
@@ -340,6 +342,17 @@ chk("Hap1 88.3% 无覆盖", "88.3%",
     f"{s4c.set_index('sample').loc['Hap1','frac_nocov']*100:.1f}%",
     "88.3% of its copies have neither haplotype covered" in flat)
 chk("旧 90.3% 双零已全部退出正文", "0 处", flat.count("90.3"), "90.3" not in flat)
+# r31 修订：两条单倍型轨道各只在 8.1% 的拷贝上非零（不是 10%）
+_ha = s4c.set_index("sample").loc["Hap1"]
+chk("Hap1 每条轨道 8% 非零", "8% of copies",
+    f"{_ha.nz_hap1*100:.1f}% / {_ha.nz_hap2*100:.1f}%",
+    "non-zero in 8% of copies" in flat and abs(_ha.nz_hap1 * 100 - 8.1) < 0.2)
+# r31 修订：四个不可读的非 LCL 样本是 1.77–3.22，下界 1.8
+_o4 = s4c[s4c["sample"].isin(["A549", "Panc1", "THP-1", "HG002"])].med_pa5_cov
+chk("四个其他样本 1.8–3.2%", "1.8 and 3.2%",
+    f"{_o4.min():.2f}–{_o4.max():.2f}",
+    "the four others between 1.8 and 3.2%" in flat
+    and abs(_o4.min() - 1.8) < 0.05 and abs(_o4.max() - 3.2) < 0.05)
 
 
 # ---------- 13 图注与图号 ----------

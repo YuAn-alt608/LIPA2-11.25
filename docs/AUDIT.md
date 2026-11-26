@@ -6,7 +6,7 @@ the text cannot be found in a table or disagrees after rounding.
 
 ## 345 — text and tables versus data
 
-107 checks. Each is a triple (location in the manuscript, expected value, source table and
+109 checks. Each is a triple (location in the manuscript, expected value, source table and
 column). The script extracts the value from the DOCX, recomputes it from the deposited table, and
 compares within the rounding used in the text.
 
@@ -24,7 +24,7 @@ A few checks exist only to stop a phrase from coming back: that no sentence attr
 difference to sequencing depth (no depth analysis was run), that the double-zero sentence keeps its
 direction, and that the 1,032-copy panel is not given a copy-level interval.
 
-Last run against the deposited manuscript: **107 checks, 0 mismatch**.
+Last run against the deposited manuscript: **109 checks, 0 mismatch**.
 
 ## 346 — figures versus text
 
