@@ -15,7 +15,7 @@ Run from a fresh clone, using only the deposited tables:
 | --- | --- | --- |
 | Eight figure panels | `python code/341_fig1.py` … `344_figS.py` | all eight `*_numbers.json` rewritten **byte-identically** |
 | Online Resource 1 (Tables S1–S8) | `python code/356_online_resource.py` | rebuilt **cell-for-cell identical** (9 sheets) |
-| Every number in the text | `python code/345_text_audit.py` | 114 checks, **0 mismatch** |
+| Every number in the text | `python code/345_text_audit.py` | 126 checks, **0 mismatch** |
 | Every number on the figures | `python code/346_figure_audit.py` | 97 checks, **0 mismatch** |
 
 The audits read the deposited manuscript and the deposited tables; nothing is hand-entered.

@@ -88,7 +88,7 @@ def main():
         axp.plot([0.22], [rk], marker="o", ms=3.2,
                  color=fc.BLUE if is_p else fc.GREY, clip_on=False)
         if is_p:
-            axp.text(0.40, rk, name, fontsize=8, va="center", ha="left", color="#000000")
+            axp.text(0.40, rk, fc.disp(name), fontsize=8, va="center", ha="left", color="#000000")
     axp.set_xlim(0, 2.6)
     axp.set_ylim(13.6, 0.15)
     axp.set_yticks([1, 2, 3, 4])
@@ -119,8 +119,7 @@ def main():
     ax1.set_ylim(ny - 0.45, -0.55)
     ax1.set_xticks([0, 5, 10, 15, 20])
     ax1.set_yticks(np.arange(ny))
-    ax1.set_yticklabels([{"WTC-11": "WTC-11", "GM27730": "GM27730", "Hek293T": "Hek293T",
-                          "MCF-7": "MCF-7"}.get(x, x) for x in order], fontsize=8)
+    ax1.set_yticklabels([fc.disp(x) for x in order], fontsize=8)
     ax1.tick_params(axis="y", length=0, pad=2)
     ax1.set_xlabel("pa5 median (%)", labelpad=2)
     fc.clean(ax1)
@@ -165,8 +164,7 @@ def main():
         ax3.plot([r["diff"]], [i], marker="o", ms=3.0, color=fc.colour(smp), zorder=3)
     ax3.axvline(0, color=fc.GREY, lw=0.5)
     ax3.set_yticks(np.arange(ny))
-    ax3.set_yticklabels([{"WTC-11": "WTC-11", "GM27730": "GM27730", "Hek293T": "Hek293T",
-                          "MCF-7": "MCF-7"}.get(x, x) for x in order], fontsize=8)
+    ax3.set_yticklabels([fc.disp(x) for x in order], fontsize=8)
     ax3.tick_params(axis="y", length=0, pad=2)
     ax3.set_xlim(-1.9, 19.5)
     ax3.set_ylim(ny - 0.45, -0.55)

@@ -75,6 +75,16 @@ def colour(sample):
     return ORANGE if sample in LCL else GREY
 
 
+# 数据表里的 sample 是 compendium 标识符，作图时按标准细胞系名显示
+DISP = {"Hek293T": "HEK293T", "Panc1": "PANC-1", "Hap1": "HAP1"}
+
+
+def disp(names):
+    if isinstance(names, str):
+        return DISP.get(names, names)
+    return [DISP.get(n, n) for n in names]
+
+
 LCL = {"HG002", "GM12878", "HG01123", "HG01258", "HG01358", "HG01361", "HG01891",
        "HG02071", "HG02074", "HG02132", "HG02135", "HG02257", "HG02486", "HG02559",
        "HG02572", "HG02717", "HG02886", "HG03516", "HG03804", "HG03942", "HG04160",

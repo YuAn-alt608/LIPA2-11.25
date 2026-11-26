@@ -80,11 +80,13 @@ chk("阈值句稳定段", "0.55-0.667, 10 readable",
 chk("阈值句指向 Table S3", "Table S3", "-", "Table S3" in flat)
 
 # ---------- 4 Table 1 ----------
+# r33：表里用标准细胞系名，数据表仍是 compendium 标识符，读表时映射回去
+KEY = {"HEK293T": "Hek293T", "PANC-1": "Panc1", "HAP1": "Hap1"}
 body1 = [[c.text.strip() for c in r.cells] for r in T1.rows]
 hdr1 = body1[0]
 bad1 = []
 for r in body1[1:]:
-    s = r[0]
+    s = KEY.get(r[0], r[0])
     if s not in rho.index:
         bad1.append((s, "not in t15")); continue
     q = rho_cov.loc[s]
@@ -131,7 +133,7 @@ chk("Table S5 有 55 对且 ρ_corr 36 对", "55 / 36", f"{len(_s5c)} / {int(_s5
 body2 = [[c.text.strip() for c in r.cells] for r in T2.rows]
 bad2 = []
 for r in body2[1:]:
-    s = r[0]
+    s = KEY.get(r[0], r[0])
     for col, scope in ((1, "ALL"), (2, "INTERGENIC")):
         q = amb[(amb.scope == scope) & (amb.pred == s)]
         if not len(q):
@@ -296,7 +298,7 @@ chk("Introduction 问题一改问 cut-off", "change of cut-off", "-",
 chk("噪声模拟段无 therefore", "0 处", flat.count("therefore"),
     "is therefore a gap in dynamic range" not in flat)
 chk("双零方向：抬高三个样本", "carry ... over the readable line", "-",
-    "they carry A549, Panc1 and THP-1 over the readable line" in flat
+    "they carry A549, PANC-1 and THP-1 over the readable line" in flat
     and "pushed three samples below the readable line" not in flat)
 chk("可及性相关 +0.70 / +0.58 / +0.22", "+0.70 / +0.58 / +0.22", "-",
     "Spearman +0.70" in flat and "+0.58" in flat and "+0.22" in flat)
@@ -370,13 +372,35 @@ for k in ("Fig. 1", "Fig. 2", "Fig. 3", "Fig. S1", "Fig. S2", "Fig. S3", "Fig. S
     chk(f"图注 {k}", "存在", "-",
         any(re.match(r"^" + re.escape(k) + r"(\s|$)", p) for p in paras))
 chk("Fig. 2 覆盖 41", "all 41 samples", "-", "for all 41 samples" in flat)
-# 图注都要有句末句号（原来四条补充图注漏了）
+# r33：FIG 要求图号后与图注结尾都不加标点
 _caps = [p for p in paras if re.match(r"^Fig\.\s?S?\d+\s", p)]
-_bad = [p[:28] for p in _caps if not p.rstrip().endswith((".", "。"))]
-chk("全部图注以句号结尾", "0 条缺句号", len(_bad), not _bad, str(_bad))
-# Hap1 的 0.79→0.121 不在 Fig. 2a 上（它只画成叉），引图处要说明
-chk("Hap1 引图已说明只画叉", "Hap1 appears there only as a cross", "-",
-    "Hap1 appears there only as a cross, because it is not assessable" in flat)
+_bad = [p[:28] for p in _caps if p.rstrip().endswith((".", "。"))]
+chk("全部图注不以标点结尾", "0 条", len(_bad), not _bad, str(_bad))
+# HAP1 的 0.79→0.121 不在 Fig. 2a 上（它只画成叉），引图处要说明
+chk("HAP1 引图已说明只画叉", "HAP1 appears there only as a cross", "-",
+    "HAP1 appears there only as a cross, because it is not assessable" in flat)
+# r33：细胞系统一为标准写法，正文与表 1/2 都不留 compendium 标识符
+chk("无旧细胞系写法", "0 处", "-",
+    not any(k in flat + " ".join(c.text for t in d.tables for r_ in t.rows
+                                for c in r_.cells) for k in ("Hek293T", "Panc1", "Hap1")))
+# r33：补充材料一律带 Online Resource 编号
+_miss = [g for g in re.findall(r"\(([^()]*(?:Table|Fig\.)\s?S\d+[^()]*)\)", flat)
+         if "Online Resource" not in g]
+chk("补充材料引用带 Online Resource", "0 处缺", len(_miss), not _miss, str(_miss[:3]))
+# r33：缩写首现给全称
+_abbr = ("Epstein\u2013Barr virus (EBV)", "transcription start site (TSS)",
+         "whole-genome bisulfite sequencing (WGBS)", "area under the curve (AUC)",
+         "histone H3 lysine 4 (H3K4me3)", "Cleavage Under Targets and Release Using Nuclease",
+         "human induced pluripotent stem cells (hiPSCs)")
+chk("缩写首现全称", "7 个", sum(a in flat for a in _abbr),
+    all(a in flat for a in _abbr))
+# r33：绘图软件与版本
+chk("绘图软件与版本", "Matplotlib 3.10.8", "-", "Matplotlib 3.10.8" in flat)
+# r33：声明小节
+for _h in ("Statements and Declarations", "Funding", "Competing interests",
+           "Ethics approval and consent to participate", "Consent for publication",
+           "Data availability", "Code availability", "Author contributions"):
+    chk(f"声明小节 {_h}", "存在", "-", _h in paras)
 # 0.003–0.51 是 r_full,cov 的范围（这 29 个的 r_s_cov 最大只有 0.34）
 _nr = s4c[(s4c.phased == True) & (~s4c.readable.isin(["yes", "borderline"]))]  # noqa: E712
 chk("29 个不可读的 r_full,cov 0.003–0.51", "0.003–0.51 in r_full,cov",

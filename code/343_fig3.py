@@ -106,7 +106,7 @@ def main():
                 axb.plot([r.lo, r.hi], [i + 0.17, i + 0.17], color=c, lw=0.7, zorder=2)
                 axb.plot([r.rho_corr], [i + 0.17], marker="o", ms=3.4, color=c, zorder=3)
     axb.set_yticks(yy)
-    axb.set_yticklabels(rho["sample"], fontsize=8)
+    axb.set_yticklabels(fc.disp(list(rho["sample"])), fontsize=8)
     axb.tick_params(axis="y", length=0, pad=2)
     axb.set_xlim(0, 1.02)
     axb.set_ylim(-0.7, len(rho) - 0.3)
@@ -146,7 +146,7 @@ def main():
                          mec=colour, mew=0.8, zorder=3)
     axc.axvline(0, color=fc.LGREY, lw=0.5)
     axc.set_yticks(ys)
-    axc.set_yticklabels(SAMPLES, fontsize=8)
+    axc.set_yticklabels(fc.disp(SAMPLES), fontsize=8)
     axc.tick_params(axis="y", length=0, pad=2)
     axc.set_xlim(-0.16, 0.68)
     axc.set_ylim(-0.7, len(SAMPLES) + 1.5)   # 顶部留 1.5 行放图例，避免压住 H1/H9

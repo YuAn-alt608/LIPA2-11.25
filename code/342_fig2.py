@@ -80,7 +80,7 @@ def main():
     axa.set_xlim(-0.45, 1.02)
     axa.set_ylim(-0.8, ny - 0.2)
     axa.set_yticks(y)
-    axa.set_yticklabels(rel["sample"], fontsize=8)
+    axa.set_yticklabels(fc.disp(list(rel["sample"])), fontsize=8)
     axa.tick_params(axis="y", length=0, pad=2)
     axa.set_xticks([0, 0.5, 1.0])
     axa.set_xlabel("split-half correlation r_s", labelpad=2)

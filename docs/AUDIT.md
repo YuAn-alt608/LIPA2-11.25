@@ -6,7 +6,7 @@ the text cannot be found in a table or disagrees after rounding.
 
 ## 345 — text and tables versus data
 
-114 checks. Each is a triple (location in the manuscript, expected value, source table and
+126 checks. Each is a triple (location in the manuscript, expected value, source table and
 column). The script extracts the value from the DOCX, recomputes it from the deposited table, and
 compares within the rounding used in the text.
 
@@ -24,7 +24,13 @@ A few checks exist only to stop a phrase from coming back: that no sentence attr
 difference to sequencing depth (no depth analysis was run), that the double-zero sentence keeps its
 direction, and that the 1,032-copy panel is not given a copy-level interval.
 
-Last run against the deposited manuscript: **114 checks, 0 mismatch**.
+The last revision added format guards rather than number guards: every supplementary citation must
+carry its Online Resource number, no figure caption may end with a punctuation mark, the compendium
+identifiers (Hek293T, Panc1, Hap1) must not reappear, the seven abbreviations must be written out at
+first use, the drawing software and its version must be stated in Methods, and the eight declaration
+headings must all be present.
+
+Last run against the deposited manuscript: **126 checks, 0 mismatch**.
 
 ## 346 — figures versus text
 

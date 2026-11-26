@@ -75,7 +75,7 @@ LCL 共 26 个（25 通过）	26 of the 41	26 LCL / 25 pass	OK
 无 sequencing depth 归因	0 处	0	OK	
 Discussion 改说 cut-off 的选择	choice of cut-off	-	OK	
 Introduction 问题一改问 cut-off	change of cut-off	-	OK	
-噪声模拟段无 therefore	0 处	4	OK	
+噪声模拟段无 therefore	0 处	5	OK	
 双零方向：抬高三个样本	carry ... over the readable line	-	OK	
 可及性相关 +0.70 / +0.58 / +0.22	+0.70 / +0.58 / +0.22	-	OK	
 同供体对照 0.11 / 0.25	0.11 / 0.25	-	OK	
@@ -96,7 +96,7 @@ Hap1 88.3% 无覆盖	88.3%	88.3%	OK
 Hap1 每条轨道 8% 非零	8% of copies	8.1% / 8.1%	OK	
 四个其他样本 1.5–3.2%	1.5 and 3.2%	1.49–3.22	OK	
 四个其他样本不含 LCL	4 个	4	OK	
-摘要 150–250 词	150–250	246	OK	
+摘要 150–250 词	150–250	248	OK	
 图注 Fig. 1	存在	-	OK	
 图注 Fig. 2	存在	-	OK	
 图注 Fig. 3	存在	-	OK	
@@ -106,8 +106,20 @@ Hap1 每条轨道 8% 非零	8% of copies	8.1% / 8.1%	OK
 图注 Fig. S4	存在	-	OK	
 图注 Fig. S5	存在	-	OK	
 Fig. 2 覆盖 41	all 41 samples	-	OK	
-全部图注以句号结尾	0 条缺句号	0	OK	[]
-Hap1 引图已说明只画叉	Hap1 appears there only as a cross	-	OK	
+全部图注不以标点结尾	0 条	0	OK	[]
+HAP1 引图已说明只画叉	HAP1 appears there only as a cross	-	OK	
+无旧细胞系写法	0 处	-	OK	
+补充材料引用带 Online Resource	0 处缺	0	OK	[]
+缩写首现全称	7 个	7	OK	
+绘图软件与版本	Matplotlib 3.10.8	-	OK	
+声明小节 Statements and Declarations	存在	-	OK	
+声明小节 Funding	存在	-	OK	
+声明小节 Competing interests	存在	-	OK	
+声明小节 Ethics approval and consent to participate	存在	-	OK	
+声明小节 Consent for publication	存在	-	OK	
+声明小节 Data availability	存在	-	OK	
+声明小节 Code availability	存在	-	OK	
+声明小节 Author contributions	存在	-	OK	
 29 个不可读的 r_full,cov 0.003–0.51	0.003–0.51 in r_full,cov	0.003–0.51	OK	
 Fig. 2b 39	39 samples that pass the validity rule	-	OK	
 Fig. 3a 与正文一致（+0.70）	+0.70	-	OK	

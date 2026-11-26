@@ -100,7 +100,7 @@ def fig_s2():
                                facecolor="#E6E6E6", edgecolor="none", zorder=0))
         ax.plot([r.obs_rho], [y], marker="o", ms=3.0, color=c, zorder=3)
     ax.set_yticks(yy)
-    ax.set_yticklabels(b["sample"], fontsize=8)
+    ax.set_yticklabels(fc.disp(list(b["sample"])), fontsize=8)
     ax.tick_params(axis="y", length=0, pad=1)
     ax.set_xlim(0, 1.0)
     ax.set_ylim(-0.7, len(b) - 0.2)
@@ -152,7 +152,7 @@ def fig_s3():
     axa.axvline(0.5, color=fc.GREY, lw=0.6, ls=(0, (3, 2)))
     axa.text(0.507, len(rel) - 0.55, "0.5", fontsize=8, color=fc.GREY, va="top")
     axa.set_yticks(rel.y)
-    axa.set_yticklabels(rel["sample"], fontsize=8)
+    axa.set_yticklabels(fc.disp(list(rel["sample"])), fontsize=8)
     # 有 11 个样本的 frac_nocov 只有 0.005–0.01，圆点几乎贴在轴线上，
     # pad 太小会让圆点和左侧标签看起来连在一起
     axa.tick_params(axis="y", length=0, pad=4)
