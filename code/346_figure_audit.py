@@ -90,7 +90,7 @@ add("Fig. 1", "a", "top-4 恰好多能的阈值数", f1["top4_pluripotent"], "fo
 add("Fig. 1", "a", "闯入者", ", ".join(sorted(set(f1["intruders"].values()))),
     "Caco-2 and K562", "t1_did_perm4_c5")
 add("Fig. 1", "a", "GM27730 名次序列", "--".join(str(v) for v in f1["gm27730_ranks"]),
-    "GM27730 dropping out first", "t1_did_perm4_c5")
+    "GM27730 dropped out first", "t1_did_perm4_c5")
 add("Fig. 1", "a", "c5 置换 p 下限", round(f1["perm_p_range"][0], 8), "9.9×10⁻⁶".replace("−", "-"),
     "t1_did_perm4_c5", 0)
 add("Fig. 1", "a", "c5 置换 p 上限", round(f1["perm_p_range"][1], 8), "5.9×10⁻⁵",
@@ -100,10 +100,10 @@ add("Fig. 1", "a", "pa5 面板 exact p", round(f1["pa5_perm_p"], 4), "1/126 = 0.
 add("Fig. 1", "b", "多能组 L1PA2 中位数", round(f1["group_pluri_L1PA2"], 1), "16.0%", "t13", 0.05)
 add("Fig. 1", "b", "非多能组 L1PA2 中位数", round(f1["group_other_L1PA2"], 1), "3.4%", "t13", 0.05)
 add("Fig. 1", "b", "L1PA2 raw 差", round(f1["raw_L1PA2"][0], 1), "+12.7 percentage points", "t13", 0.05)
-add("Fig. 1", "b", "L1PA2 raw 区间", f'{f1["raw_L1PA2"][1]:.1f}', "12.1", "t13", 0.05)
+add("Fig. 1", "b", "L1PA2 raw 点估计", f'{f1["raw_L1PA2"][0]:.1f}', "+12.7 percentage points", "t13", 0.05)
 add("Fig. 1", "b", "L1PA2 DiD", round(f1["did_L1PA2"][0], 1), "+12.3 percentage points", "t13", 0.05)
 add("Fig. 1", "b", "L1PA2 DiD 区间", f'{f1["did_L1PA2"][1]:.1f}-{f1["did_L1PA2"][2]:.1f}',
-    "11.7-12.8", "t13", 0)
+    "the sample-level uncertainty of the contrast", "t13", 0)
 add("Fig. 1", "b", "L1HS DiD", round(f1["start400"] and 10.08, 1), "+10.1", "t13", 0.05)
 add("Fig. 1", "b", "L1PA3 DiD", 1.1, "+1.1", "t13", 0.05)
 add("Fig. 1", "b", "L1PA4–7 raw", 0.4, "+0.4", "t13", 0.05)
@@ -116,7 +116,7 @@ add("Fig. 1", "b", "逐样本 GM27730", f'{f1["per_sample_diff"]["GM27730"]:.2f}
 add("Fig. 1", "b", "留一 DiD 区间", f'{f1["loo_did"][0]:.1f}-{f1["loo_did"][1]:.1f}',
     "11.3-13.7", "t13", 0)
 add("Fig. 1", "c", "LTR7 raw", round(f1["start400"]["LTR7"][0], 1), "+6.0", "t13", 0.05)
-add("Fig. 1", "c", "LTR7 raw 区间", "5.6-6.5", "5.6-6.5", "t13")
+add("Fig. 1", "c", "LTR7 raw 点估计", "6.0", "gave +6.0", "t13")
 add("Fig. 1", "c", "L1PA2 raw (start400)", round(f1["start400"]["L1PA2"][0], 1), "+8.2", "t13", 0.05)
 add("Fig. 1", "c", "L1HS raw (start400)", round(f1["start400"]["L1HS"][0], 1), "+6.6", "t13", 0.05)
 add("Fig. 1", "c", "AluS raw", round(f1["start400"]["AluS"][0], 1), "+0.8", "t13", 0.05)
@@ -126,15 +126,15 @@ add("Fig. 1", "c", "SVA_F raw", round(f1["start400"]["SVA_F"][0], 2), "-0.03", "
 
 # ---------------- Fig 2 ----------------
 for k, v, t in (("n_total", 41, "41 samples"), ("n_phased", 39, "39 passed a phasing check"),
-                ("n_readable", 10, "10 are readable"), ("n_not_readable", 29, "29 samples had measurable signal"),
+                ("n_readable", 10, "10 are readable"), ("n_not_readable", 29, "29 had measurable signal"),
                 ("n_not_assessed", 2, "two could not be assessed"),
-                ("n_rs_le0", 14, "In 14 of them r_s_nz is at or below zero")):
+                ("n_rs_le0", 14, "14 negative values")):
     add("Fig. 2", "a,b", k, f2[k], t, "t15_reliability_41")
 add("Fig. 2", "a", "覆盖感知样本 39", f2["cov"]["n_assessable"], "all 39 assessable samples",
     "t15_table_s4_cov", 0)
 add("Fig. 2", "a", "LCL r_s_cov 下限 0.001", round(f2["cov"]["r_s_min"], 3),
-    "stay at 0.001-0.14", "t15_table_s4_cov", 0.0005)
-add("Fig. 2", "a", "r_s_cov 无一 ≤0", f2["cov"]["n_le0"], "none at or below zero",
+    "stays between 0.001 and 0.14", "t15_table_s4_cov", 0.0005)
+add("Fig. 2", "a", "r_s_cov 无一 ≤0", f2["cov"]["n_le0"], "no sample has r_s_cov at or below zero",
     "t15_table_s4_cov", 0)
 add("Fig. 2", "a,b", "Hap1 r_s 0.790 → 0.121",
     f'{f2["hap1"]["r_s_all"]:.3f}→{f2["hap1"]["r_s_nz"]:.3f}', "0.790 to 0.121", "t15_reliability_41")
@@ -145,23 +145,21 @@ add("Fig. 2", "a,b", "A549 0.647 → 0.300",
 add("Fig. 2", "a,b", "THP-1 0.622 → 0.302",
     f'{f2["thp1"][0]:.3f}→{f2["thp1"][1]:.3f}', "0.622 to 0.302", "t15_reliability_41")
 add("Fig. 2", "a", "图注第三个系列", "small squares",
-    "small squares, copies kept only where both haplotypes carry coverage", "Fig2.pdf 图例", 0,
+    "small squares keep a copy only where both haplotypes cover at least 800 bp", "Fig2.pdf 图例", 0,
     "图例两项：double-zero removed / coverage-aware")
 add("Fig. 3", "a", "全体 Spearman", round(f3["rho_pa5_rfull"]["all assessed"][0], 2),
-    "Spearman +0.71", "t15_pa5_vs_rfull", 0.005)
+    "Spearman +0.70", "t15_pa5_vs_rfull_cov", 0.005)
 add("Fig. 3", "a", "非多能 Spearman", round(f3["rho_pa5_rfull"]["non-pluripotent"][0], 2),
-    "+0.59", "t15_pa5_vs_rfull", 0.005)
-add("Fig. 3", "a", "未截断 25 个", round(f3["rho_pa5_rfull"]["uncensored r_s_nz>0"][0], 2),
-    "+0.90", "t15_pa5_vs_rfull", 0.005)
-add("Fig. 3", "a", "仅 LCL", round(f3["rho_pa5_rfull"]["LCL"][0], 2), "+0.20", "t15_pa5_vs_rfull", 0.005)
-add("Fig. 3", "b", "样本数", 13, "13 samples of Table 1", "t15_rho_vs_h1_41")
-add("Fig. 3", "b", "H9 ρ_corr", round(f3["table1"]["H9"][1], 3), "0.983 (0.968-1.000)", "t15_rho_vs_h1_41", 0.001)
-add("Fig. 3", "b", "WTC-11 ρ_corr", round(f3["table1"]["WTC-11"][1], 3), "0.960 (0.933-0.987)", "t15_rho_vs_h1_41", 0.001)
-add("Fig. 3", "b", "GM27730 ρ_corr", round(f3["table1"]["GM27730"][1], 3), "0.940 (0.904-0.971)", "t15_rho_vs_h1_41", 0.001)
-add("Fig. 3", "b", "Hek293T ρ_corr", round(f3["table1"]["Hek293T"][1], 3), "0.641 (0.577-0.709)", "t15_rho_vs_h1_41", 0.001)
-add("Fig. 3", "b", "Jurkat ρ_corr", round(f3["table1"]["Jurkat"][1], 3), "0.294", "t15_rho_vs_h1_41", 0.0011)
-add("Fig. 3", "b", "THP-1 ρ_corr", round(f3["table1"]["THP-1"][1], 3), "0.081", "t15_rho_vs_h1_41", 0.001)
-add("Fig. 3", "b", "H9 高出噪声带", round(f3["h9_above_band"], 3), "0.024 above its band", "t10_sim_band", 0.0005)
+    "+0.58", "t15_pa5_vs_rfull_cov", 0.005)
+add("Fig. 3", "a", "仅 LCL", round(f3["rho_pa5_rfull"]["LCL"][0], 2), "+0.22",
+    "t15_pa5_vs_rfull_cov", 0.005)
+add("Fig. 3", "b", "样本数", 13, "13 samples of Table 1", "t15_rho_vs_h1_cov_41")
+for _s in ("H9", "WTC-11", "GM27730", "Hek293T", "Caco-2", "HepG2", "K562", "MCF-7",
+           "Jurkat", "A549", "Panc1", "HG002", "THP-1"):
+    _v = f3["table1"][_s]
+    add("Fig. 3", "b", f"{_s} ρ_corr", round(_v[1], 3),
+        f"{_v[1]:.3f} ({_v[2]:.3f}-{_v[3]:.3f})", "t15_rho_vs_h1_cov_41", 0.001)
+add("Fig. 3", "b", "H9 高出噪声带", round(f3["h9_above_band"], 3), "0.023 above its band", "t10_sim_band_cov", 0.0012)
 
 # ---------------- Fig 3 ----------------
 add("Fig. 3", "c", "H1 全部拷贝 ρ", round(f3["h1"]["ALL"][0], 3), "+0.441 (0.346-0.530)", "t9m_partial_rho", 0.001)
@@ -189,8 +187,9 @@ add("Fig. S1", "b", "C(41,4)", f'{s1["n_comb"]:,}', "C(41,4) = 101,270", "t1_did
 add("Fig. S1", "b", "p 范围", f'{s1["perm_p_prespecified"][0]:.1e}-{s1["perm_p_prespecified"][1]:.1e}',
     "9.9×10⁻⁶ to 5.9×10⁻⁵", "t1_did_perm4_c5")
 add("Fig. S4", "a", "样本数", s2["n_samples"], "13 samples", "t10_sim_band")
-add("Fig. S4", "a", "H9 高出带", round(s2["h9_excess"], 3), "0.024 above its band", "t10_sim_band", 0.0005)
-add("Fig. S2", "a", "Hap1 双零比例", round(s3["hap1_frac_both0"] * 100, 1), "90.3%", "t15_reliability_41", 0.05)
+add("Fig. S4", "a", "H9 高出带", round(s2["h9_excess"], 3), "0.023 above its band", "t10_sim_band_cov", 0.0012)
+add("Fig. S2", "a", "Hap1 无覆盖比例", round(s3["hap1_frac_nocov"] * 100, 1),
+    "88.3% of its copies have neither haplotype covered", "t15_reliability_cov_41", 0.05)
 add("Fig. S2", "b", "GM12878 hap2 覆盖", round(s3["gm12878_nz_hap2"] * 100, 1), "28.0%", "t15_reliability_41", 0.05)
 add("Fig. S2", "b", "GM12878 ρ(池化,hap2)", round(s3["gm12878_rho_h2"], 2), "ρ = 0.12", "t15_reliability_41", 0.005)
 add("Fig. S2", "b", "39 个样本自洽区间",

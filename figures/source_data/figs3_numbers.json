@@ -2,6 +2,7 @@
  "n_samples": 41,
  "n_phased": 39,
  "frac_both0_max": 0.9031,
+ "hap1_frac_nocov": 0.8828,
  "hap1_frac_both0": 0.9031,
  "gm12878_rho_h2": 0.1182,
  "gm12878_nz_hap2": 0.28,

@@ -1,7 +1,7 @@
 # Data dictionary
 
 Every file below is a frozen copy of the analysis table used by the manuscript, 
-the figures or Tables S1–S8. Paths are relative to `data/derived/`. 
+the figures or Tables S1-S8. Paths are relative to `data/derived/`. 
 All tables are tab-separated; `.gz` files are gzip-compressed TSV. 
 Row counts exclude the header.
 
@@ -86,6 +86,29 @@ Rows: 13. Columns: 15.
 | `pa5_median` |
 | `is_pluri` |
 
+## `t10_sim_band_cov.tsv`
+
+Rows: 40. Columns: 16.
+
+| column |
+| --- |
+| `sample` |
+| `obs_rho` |
+| `band_lo` |
+| `band_hi` |
+| `sim_med` |
+| `in_band` |
+| `direction` |
+| `sigma` |
+| `r_full` |
+| `r_full_old` |
+| `band_lo_2side` |
+| `band_hi_2side` |
+| `in_band_2side` |
+| `sigma_H1` |
+| `pa5_median` |
+| `is_pluri` |
+
 ## `t13/t13_group_contrast_sample_first.tsv`
 
 Rows: 30. Columns: 15.
@@ -137,6 +160,22 @@ Rows: 11. Columns: 7.
 | `diff` |
 | `did_after_loo` |
 | `role` |
+
+## `t15/t15_did_r28.tsv`
+
+Rows: 11. Columns: 9.
+
+| column |
+| --- |
+| `sample` |
+| `raw_median` |
+| `raw_mean` |
+| `cov_median` |
+| `cov_mean` |
+| `cov_median_noX` |
+| `raw_median_subfam` |
+| `cov_median_subfam` |
+| `grp` |
 
 ## `t15/t15_hap_cov_L1PA2_41.tsv.gz`
 
@@ -227,6 +266,7 @@ Rows: 1032. Columns: 83.
 | `GM25455.hap2` |
 | `GM27730.hap1` |
 | `GM27730.hap2` |
+
 ## `t15/t15_pa5_hap_L1PA2_41.tsv.gz`
 
 Rows: 1032. Columns: 83.
@@ -328,6 +368,77 @@ Rows: 6. Columns: 4.
 | `rho` |
 | `p` |
 
+## `t15/t15_pa5_vs_rfull_cov.tsv`
+
+Rows: 5. Columns: 4.
+
+| column |
+| --- |
+| `subset` |
+| `n` |
+| `rho` |
+| `p` |
+
+## `t15/t15_pa5_vs_rfull_cov.tsv`
+
+Rows: 5. Columns: 4.
+
+| column |
+| --- |
+| `subset` |
+| `n` |
+| `rho` |
+| `p` |
+
+## `t15/t15_pool_cov_L1PA2_41.tsv.gz`
+
+Rows: 1032. Columns: 42.
+
+| column |
+| --- |
+| `unit_id` |
+| `GM12878` |
+| `K562` |
+| `HepG2` |
+| `H1` |
+| `Hap1` |
+| `Hek293T` |
+| `Jurkat` |
+| `HG002` |
+| `Panc1` |
+| `THP-1` |
+| `H9` |
+| `HG01123` |
+| `HG01258` |
+| `HG01358` |
+| `HG01361` |
+| `HG01891` |
+| `HG02071` |
+| `HG02074` |
+| `HG02132` |
+| `HG02135` |
+| `HG02257` |
+| `HG02486` |
+| `HG02559` |
+| `HG02572` |
+| `HG02717` |
+| `HG02886` |
+| `HG03516` |
+| `HG03804` |
+| `HG03942` |
+| `HG04160` |
+| `HG04187` |
+| `A549` |
+| `MCF-7` |
+| `HCT116` |
+| `Caco-2` |
+| `WTC-11` |
+| `GM28572` |
+| `GM28570` |
+| `GM25456` |
+| `GM25455` |
+| `GM27730` |
+
 ## `t15/t15_reliability_41.tsv`
 
 Rows: 41. Columns: 19.
@@ -354,6 +465,28 @@ Rows: 41. Columns: 19.
 | `readable` |
 | `r_s_le0` |
 
+## `t15/t15_reliability_cov_41.tsv`
+
+Rows: 41. Columns: 15.
+
+| column |
+| --- |
+| `sample` |
+| `group` |
+| `n_cov` |
+| `frac_both0` |
+| `frac_nocov` |
+| `rho_m_h1` |
+| `rho_m_h2` |
+| `med_pa5_cov` |
+| `r_s_cov` |
+| `r_full_cov` |
+| `valid` |
+| `note` |
+| `r_full_cov_lo` |
+| `r_full_cov_hi` |
+| `readable` |
+
 ## `t15/t15_rho_vs_h1_41.tsv`
 
 Rows: 40. Columns: 8.
@@ -368,6 +501,24 @@ Rows: 40. Columns: 8.
 | `hi` |
 | `n_boot` |
 | `readable` |
+
+## `t15/t15_rho_vs_h1_cov_41.tsv`
+
+Rows: 41. Columns: 11.
+
+| column |
+| --- |
+| `sample` |
+| `group` |
+| `readable` |
+| `rho_obs` |
+| `rho_obs_lo` |
+| `rho_obs_hi` |
+| `r_sub` |
+| `r_ref` |
+| `rho_corr` |
+| `lo` |
+| `hi` |
 
 ## `t15/t15_selfconsistency.tsv`
 
@@ -414,7 +565,7 @@ Rows: 41. Columns: 23.
 
 ## `t15/t15_table_s4_cov.tsv`
 
-Rows: 41. Columns: 27.
+Rows: 41. Columns: 35.
 
 | column |
 | --- |
@@ -445,27 +596,64 @@ Rows: 41. Columns: 27.
 | `frac_both0_covered` |
 | `r_s_cov` |
 | `r_full_cov` |
+| `r_s_cov_1bp` |
+| `med_frac_cov` |
+| `n_both0` |
+| `n_both0_cov800` |
+| `r_full_cov_lo` |
+| `r_full_cov_hi` |
+| `med_pa5_cov` |
+| `frac_nocov` |
+
 ## `t15/t15_table_s4_cov_summary.tsv`
 
-Rows: 1. Columns: 12.
+Rows: 1. Columns: 23.
 
 | column |
 | --- |
 | `n_with_track` |
 | `n_assessable` |
-| `n_both0` |
-| `n_both0_covered` |
+| `tot_both0` |
+| `tot_both0_cov` |
 | `pct_both0_covered` |
 | `frac_min` |
 | `frac_max` |
+| `frac_median` |
+| `medfrac_min` |
+| `medfrac_median` |
+| `medfrac_max` |
 | `r_s_min` |
 | `r_s_max` |
 | `n_le0` |
 | `n_ge_half` |
 | `r_full_max` |
+| `nr_r_s_min` |
+| `nr_r_s_max` |
+| `rd_r_s_min` |
+| `rd_r_s_max` |
+| `lcl_r_s_min` |
+| `lcl_r_s_max` |
+| `n_readable` |
+
 ## `t15/t15_table_s7_threshold.tsv`
 
 Rows: 7. Columns: 9.
+
+| column |
+| --- |
+| `threshold` |
+| `n_phased` |
+| `readable` |
+| `ci_entirely_above` |
+| `ci_spans_threshold` |
+| `below_point` |
+| `ci_entirely_below` |
+| `readable_samples` |
+| `borderline_samples` |
+
+## `t15/t15_table_s7_threshold_cov.tsv`
+
+Rows: 9. Columns: 9.
 
 | column |
 | --- |
@@ -493,6 +681,29 @@ Rows: 55. Columns: 14.
 | `rho_obs_hi` |
 | `r_full_a` |
 | `r_full_b` |
+| `rho_corr` |
+| `rho_corr_lo` |
+| `rho_corr_hi` |
+| `readable_a` |
+| `readable_b` |
+| `n_copy` |
+
+## `t15/t15_table_s8_pairwise_cov.tsv`
+
+Rows: 55. Columns: 16.
+
+| column |
+| --- |
+| `sample_a` |
+| `sample_b` |
+| `group` |
+| `rho_obs` |
+| `rho_obs_lo` |
+| `rho_obs_hi` |
+| `r_s_cov_a` |
+| `r_full_cov_a` |
+| `r_s_cov_b` |
+| `r_full_cov_b` |
 | `rho_corr` |
 | `rho_corr_lo` |
 | `rho_corr_hi` |

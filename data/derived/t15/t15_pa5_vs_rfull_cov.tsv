@@ -1,0 +1,6 @@
+subset	n	rho	p
+all assessed	39	0.6978	7.9e-07
+pluripotent	4	0.8	0.2
+non-pluripotent	35	0.5822	0.000244
+LCL	25	0.2158	0.3
+readable	10	0.8182	0.00381

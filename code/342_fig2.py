@@ -43,6 +43,19 @@ def main():
     for c in ("r_s_cov", "r_full_cov", "frac_both0_covered"):
         rel[c] = pd.to_numeric(rel[c], errors="coerce")
 
+    # r28：主估计量换成覆盖感知版。把 389 的 r_full_cov 与区间顶到 r_full 系列上，
+    # 旧的双零口径留成 r_full_nz（图 2b 不再画它，数字仍在 fig2_numbers.json 里可查）。
+    new = fc.load("t15/t15_reliability_cov_41.tsv").set_index("sample")
+    rel = rel.join(new[["r_full_cov_lo", "r_full_cov_hi", "readable"]].rename(
+        columns={"readable": "readable_cov"}), on="sample")
+    rel["r_full_nz"] = rel["r_full"]
+    rel["r_full_lo_nz"] = rel["r_full_lo"]
+    rel["r_full_hi_nz"] = rel["r_full_hi"]
+    rel["r_full"] = rel["r_full_cov"]
+    rel["r_full_lo"] = rel["r_full_cov_lo"]
+    rel["r_full_hi"] = rel["r_full_cov_hi"]
+    rel["readable"] = rel["readable_cov"]
+
     order = fc.sample_order_by_rfull(rel)
     rel = rel.set_index("sample").loc[order].reset_index()
     y = np.arange(len(rel))[::-1]
@@ -81,9 +94,6 @@ def main():
             axb.plot([0.0], [r.y], marker="x", ms=4.0, color=fc.LGREY, mew=0.9)
             continue
         c = fc.colour(r["sample"])
-        if r.r_s_le0:
-            axb.plot([0.0], [r.y], marker="^", ms=4.2, mfc="white", mec=c, mew=0.8)
-            continue
         style = dict(marker="o", ms=4.0, color=c, zorder=3)
         if r.readable == "borderline":
             style.update(mfc="white", mfcalt=c, fillstyle="left", mew=0.7)
@@ -98,7 +108,7 @@ def main():
     axb.set_ylim(-0.8, ny - 0.2)
     axb.set_yticks([])
     axb.set_xticks([0, 0.5, 1.0])
-    axb.set_xlabel("r_full (Spearman–Brown)", labelpad=2)
+    axb.set_xlabel("r_full,cov (Spearman–Brown)", labelpad=2)
     fc.clean(axb, left=False)
     fc.panel(axb, "b", dx=-0.12, dy=1.002)
 
@@ -109,24 +119,25 @@ def main():
           Line2D([], [], marker="s", ls="", mfc="#222222", mec="none", ms=3.0,
                  label="coverage-aware"),
           Line2D([], [], marker="x", ls="", color=fc.LGREY, mew=0.9, ms=3.6, label="not assessed")]
-    fig.legend(handles=ha, loc="lower left", bbox_to_anchor=(0.0, 0.050), frameon=False,
-               ncol=4, handletextpad=0.25, columnspacing=0.9, fontsize=8, borderaxespad=0)
-
     hb = [Line2D([], [], marker="o", ls="", color=fc.GREY, ms=3.6, label="readable"),
           Line2D([], [], marker="o", ls="", mfc="white", mfcalt=fc.GREY, fillstyle="left",
                  mec=fc.GREY, mew=0.7, ms=3.6, label="borderline"),
           Line2D([], [], marker="o", ls="", mfc="white", mec=fc.GREY, mew=0.7, ms=3.6,
-                 label="not readable"),
-          Line2D([], [], marker="^", ls="", mfc="white", mec=fc.GREY, mew=0.7, ms=3.8,
-                 label="r_s_nz ≤ 0")]
-    fig.legend(handles=hb, loc="lower left", bbox_to_anchor=(0.505, 0.008), frameon=False,
-               ncol=2, handletextpad=0.25, columnspacing=1.0, labelspacing=0.35,
-               fontsize=8, borderaxespad=0)
+                 label="not readable")]
+
+    # 两排图例都用 mode="expand" 铺满同一条左右边线：每项间距相等，
+    # 不会因为某一排项数少（3 项）就挤到一侧或折成两行。
+    for handles, ncol, ybot in ((ha, 4, 0.058), (hb, 3, 0.016)):
+        fig.legend(handles=handles, loc="lower left",
+                   bbox_to_anchor=(0.0, ybot, 0.992, 0.001),
+                   ncol=ncol, mode="expand", frameon=False, borderpad=0,
+                   handletextpad=0.3, handlelength=1.2, columnspacing=1.6,
+                   fontsize=8, borderaxespad=0)
 
     # ---------------- (c)(d) 的数（画在 Fig. 3，此处只登记） ----------------
-    pr = fc.load("t15/t15_pa5_vs_rfull.tsv").set_index("subset")
-    rho = fc.load("t15/t15_rho_vs_h1_41.tsv", keep_default_na=False, na_values=[""])
-    band = fc.load("t10_sim_band.tsv").set_index("sample")
+    pr = fc.load("t15/t15_pa5_vs_rfull_cov.tsv").set_index("subset")
+    rho = fc.load("t15/t15_rho_vs_h1_cov_41.tsv", keep_default_na=False, na_values=[""])
+    band = fc.load("t10_sim_band_cov.tsv").set_index("sample")
     keep = ["H9", "WTC-11", "GM27730", "Hek293T", "Caco-2", "HepG2", "K562", "MCF-7",
             "Jurkat", "A549", "Panc1", "HG002", "THP-1"]
     rho = rho[rho["sample"].isin(keep)].copy()

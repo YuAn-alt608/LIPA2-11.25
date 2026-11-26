@@ -88,10 +88,11 @@ def fig_s1():
 # --------------------------------------------------------------- S2
 def fig_s2():
     print("Fig. S2")
-    b = fc.load("t10_sim_band.tsv").sort_values("obs_rho", ascending=False).reset_index(drop=True)
-    W, H = 174.0, 88.0
+    b = fc.load("t10_sim_band_cov.tsv").sort_values("obs_rho", ascending=False).reset_index(drop=True)
+    # 40 个样本逐行标注：行距需 >= 4.4 mm，否则 8 pt 的 y 标签互相压字
+    W, H = 174.0, 200.0
     fig = plt.figure(figsize=(W * fc.MM, H * fc.MM))
-    ax = ax_mm(fig, 15.0, 14.0, 157.0, 62.0, W, H)
+    ax = ax_mm(fig, 15.0, 12.0, 157.0, 176.0, W, H)
     yy = np.arange(len(b))[::-1]
     for y, (_, r) in zip(yy, b.iterrows()):
         c = fc.colour(r["sample"])
@@ -113,7 +114,7 @@ def fig_s2():
     h9 = b[b["sample"] == "H9"].iloc[0]
     ax.annotate(f"+{h9.obs_rho - h9.band_hi:.3f}", (h9.obs_rho, len(b) - 1 + 0.34),
                 fontsize=8, ha="center", va="bottom", color=fc.GREY)
-    ax.text(0.02, 0.97, "H9 self-comparison 0.024 above its band;\nreadable non-pluripotent samples below theirs",
+    ax.text(0.02, 0.97, f"H9 self-comparison {h9.obs_rho - h9.band_hi:.3f} above its band;\nreadable non-pluripotent samples below theirs",
             transform=ax.transAxes, fontsize=8, va="top")
     b.to_csv(os.path.join(fc.FIGDIR, "figS2_data_band.tsv"), sep="\t", index=False)
     fc.dump_numbers("figs2", {
@@ -130,7 +131,11 @@ def fig_s3():
     print("Fig. S3")
     rel = fc.rel41()
     sc = fc.load("t15/t15_selfconsistency.tsv")
+    # (a) 画的是有效性规则第一条检验的量：两条单倍型都没覆盖的拷贝占比
+    _cv = fc.load("t15/t15_reliability_cov_41.tsv")[["sample", "frac_nocov"]]
+    rel = rel.merge(_cv, on="sample", how="left")
     rel["frac_both0"] = pd.to_numeric(rel["frac_both0"], errors="coerce")
+    rel["frac_nocov"] = pd.to_numeric(rel["frac_nocov"], errors="coerce")
     rel["rho_m_h1"] = pd.to_numeric(rel["rho_m_h1"], errors="coerce")
     rel["rho_m_h2"] = pd.to_numeric(rel["rho_m_h2"], errors="coerce")
     order = fc.sample_order_by_rfull(rel)
@@ -142,17 +147,17 @@ def fig_s3():
     axa = ax_mm(fig, 15.0, 18.0, 50.0, 136.0, W, H)
     for _, r in rel.iterrows():
         c = fc.colour(r["sample"])
-        axa.plot([0, r.frac_both0], [r.y, r.y], color=fc.LGREY, lw=0.5, zorder=1)
-        axa.plot([r.frac_both0], [r.y], marker="o", ms=2.4, color=c, zorder=3)
+        axa.plot([0, r.frac_nocov], [r.y, r.y], color=fc.LGREY, lw=0.5, zorder=1)
+        axa.plot([r.frac_nocov], [r.y], marker="o", ms=2.4, color=c, zorder=3)
     axa.axvline(0.5, color=fc.GREY, lw=0.6, ls=(0, (3, 2)))
-    axa.text(0.507, -0.62, "0.5", fontsize=8, color=fc.GREY, va="bottom")
+    axa.text(0.507, len(rel) - 0.55, "0.5", fontsize=8, color=fc.GREY, va="top")
     axa.set_yticks(rel.y)
     axa.set_yticklabels(rel["sample"], fontsize=8)
     axa.tick_params(axis="y", length=0, pad=1)
     axa.set_xlim(0, 1.0)
     axa.set_ylim(-0.8, len(rel) - 0.2)
     axa.set_xticks([0, 0.5, 1.0])
-    axa.set_xlabel("fraction double-zero", labelpad=1)
+    axa.set_xlabel("fraction with neither haplotype covered", labelpad=1)
     fc.clean(axa)
     fc.panel(axa, "a", dx=0.0, dy=1.005)
 
@@ -169,7 +174,7 @@ def fig_s3():
             axb.plot([sc.loc[r["sample"], "rho_mean_vs_pooled"]], [r.y], marker="s", ms=2.0,
                      mfc="white", mec=c, mew=0.6, zorder=3)
     axb.axvline(0.2, color=fc.GREY, lw=0.6, ls=(0, (3, 2)))
-    axb.text(0.207, -0.62, "0.2", fontsize=8, color=fc.GREY, va="bottom", ha="right")
+    axb.text(0.212, len(rel) * 0.46, "0.2", fontsize=8, color=fc.GREY, va="center", ha="left")
     axb.set_yticks([])
     axb.set_xlim(-0.12, 1.02)
     axb.set_ylim(-0.8, len(rel) - 0.2)
@@ -193,6 +198,7 @@ def fig_s3():
     fc.dump_numbers("figs3", {
         "n_samples": int(len(rel)), "n_phased": int(rel.phased.sum()),
         "frac_both0_max": float(rel.frac_both0.max()),
+        "hap1_frac_nocov": float(rel.set_index("sample").loc["Hap1", "frac_nocov"]),
         "hap1_frac_both0": float(rel.set_index("sample").loc["Hap1", "frac_both0"]),
         "gm12878_rho_h2": float(rel.set_index("sample").loc["GM12878", "rho_m_h2"]),
         "gm12878_nz_hap2": float(rel.set_index("sample").loc["GM12878", "nz_hap2"]),

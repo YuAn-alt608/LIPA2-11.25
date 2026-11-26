@@ -1,2 +1,2 @@
-n_with_track	n_assessable	n_both0	n_both0_covered	pct_both0_covered	frac_min	frac_max	r_s_min	r_s_max	n_le0	n_ge_half	r_full_max
-41	39	5257	1463	27.83	0.0198	0.9186	0.0014	0.8855	0	10	0.9393
+n_with_track	n_assessable	tot_both0	tot_both0_cov	pct_both0_covered	frac_min	frac_max	frac_median	medfrac_min	medfrac_median	medfrac_max	r_s_min	r_s_max	n_le0	n_ge_half	r_full_max	nr_r_s_min	nr_r_s_max	rd_r_s_min	rd_r_s_max	lcl_r_s_min	lcl_r_s_max	n_readable
+41	39	5257	1441	27.41	0.02	0.919	0.405	1.0	1.0	1.0	0.0014	0.8851	0	10	0.939	0.0014	0.3394	0.5152	0.8851	0.0014	0.1362	10

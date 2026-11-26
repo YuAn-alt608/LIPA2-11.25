@@ -13,7 +13,9 @@ t15/t15_pa5_hap_L1PA2_41.tsv.gz       331 重抓并逐位校验后的 hap1/hap2
 分层是两件事，混在一起会把「测了、不可读」写成「未评估」：
 
   第一层 定相是否可用（决定该样本进不进分母）
-    frac_both0 > 0.5                       -> phase_missing，not assessed
+    frac_nocov > 0.5                        -> phase_missing，not assessed
+      （frac_nocov = 两条单倍型都没覆盖的拷贝占比；等价于「测得的是空轨道」，
+        与双零 frac_both0 不同：双零里还有一条已覆盖、另一条为零的拷贝）
     min(ρ(merged,hap1), ρ(merged,hap2)) < 0.2 -> phase_missing，not assessed
 
   第二层 可用者里逐拷贝排序是否可靠（决定 readable）
@@ -50,6 +52,7 @@ RES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "de
 OUT = os.path.join(RES, "t15")
 MERGED = os.path.join(RES, "t9b", "t9b_pa5_L1PA2_41_fixed.tsv.gz")
 HAP = os.path.join(OUT, "t15_pa5_hap_L1PA2_41.tsv.gz")
+HCOV = os.path.join(OUT, "t15_hap_cov_L1PA2_41.tsv.gz")
 UNITS = os.path.join(RES, "l1pa5_copy_tracks_v2.tsv.gz")
 MAN = "../../01_data/meta/fiberseq_samples.tsv"
 PUB = os.path.join(RES, "t10_reliability_fig.tsv")
@@ -69,8 +72,10 @@ def sb_clip(r):
 
 
 def phase_status(st):
-    if st["frac_both0"] > 0.5:
-        return False, "phase_missing: frac_both0>0.5"
+    # 判断的是「这条单倍型在这个窗口里根本没有 fibre」，而不是「两条单倍型的 pa5 都是 0」：
+    # 双零还包含「有覆盖但确实关闭」的拷贝，后者是可测的，不能当作缺相位剔除。
+    if st["frac_uncovered"] > 0.5:
+        return False, "phase_missing: both haplotypes uncovered in >50% of copies"
     lo = min(np.nan_to_num(st["rho_merged_hap1"], nan=-1.0),
              np.nan_to_num(st["rho_merged_hap2"], nan=-1.0))
     if lo < 0.2:
@@ -95,6 +100,9 @@ def main():
     samples = list(man.index)
     assert len(samples) == 41
 
+    # 覆盖轨道用来判断「有没有测到」，与「测得是 0」分开（有效性规则见 phase_status）
+    hcov = pd.read_csv(HCOV, sep="\t").set_index("unit_id").loc[hap.unit_id]
+
     # ---------- 点估计 ----------
     rows = []
     for s in samples:
@@ -102,6 +110,8 @@ def main():
         a2 = hap[f"{s}.hap2"].values
         m = mrg[s].values
         st = m303.hap_stats(a1, a2, m)
+        st["frac_uncovered"] = float(np.mean((hcov[f"{s}.hap1"].values == 0) &
+                                             (hcov[f"{s}.hap2"].values == 0)))
         ok, note = phase_status(st)
         grp = ("pluripotent" if s in PLURI else
                ("other (LCL)" if str(man.loc[s, "tissue"]).startswith("Lymphoblastoid") else "other"))

@@ -44,3 +44,18 @@ without editing.
 | `345_text_audit.py` | 85 numbers in the text and tables against `data/derived` |
 | `346_figure_audit.py` | 91 values drawn in the figures against the text |
 | `359_doi_check.py` | every reference against Crossref |
+
+## Added in the reliability revision (r28-r31)
+
+| Script | Produces | Reads |
+| --- | --- | --- |
+| `387_fetch_pool_cov.py` | pooled `covered_bp` per window, 41 samples | public bigWig, `data/meta/fiberseq_samples.tsv` |
+| `389_reliability_cov.py` | the coverage-aware reliability of all 41 samples, with the validity rule | `t15/t15_pa5_hap_L1PA2_41.tsv.gz`, `t15/t15_hap_cov_L1PA2_41.tsv.gz` |
+| `390_did_cov.py` | difference-in-differences under the fixed and the covered denominator, sample-level bootstrap | `t15/`, cluster assignment |
+| `391_table_s4_cov.py` | Table S4 with the 800 bp floor and the readable call | `t15/` coverage tables |
+| `397_sim_band_cov.py` | the noise-only band on `r_full,cov` | `t15/t15_rho_vs_h1_cov_41.tsv`, coverage |
+| `398_threshold_cov.py` | readability under each `r_full,cov` threshold (Table S3) | `t15/t15_reliability_cov_41.tsv` |
+| `399_t15_s5_cov.py` | Table S5, 55 pairs corrected with `r_full,cov` | `t15/t15_rho_vs_h1_cov_41.tsv` |
+
+Figures 2-4 and the two audits were updated for the coverage-aware columns; `345` gained the
+guards listed in `docs/AUDIT.md`.

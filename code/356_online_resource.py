@@ -7,8 +7,8 @@
 S1 样本清单（含更正后的标签）      <- sample_labels.tsv
 S2 拷贝集与窗口定义                  <- 手工定义（数字来自 Methods）
 S3 各 r_full 阈值下的可读性          <- t15_table_s7_threshold.tsv
-S4 41 样本可靠性图谱                <- t15_table_s3.tsv
-S5 11 样本两两一致性（55 对）        <- t15_table_s8_pairwise.tsv
+S4 41 样本可靠性图谱（含覆盖感知列）<- t15_table_s4_cov.tsv
+S5 11 样本两两一致性（55 对）        <- t15_table_s8_pairwise_cov.tsv
 S6 偏相关（AMB 记为未表达）          <- t13_partial_rho_allcopies.tsv
 S7 跨样本甲基化相关                  <- t9d_coupling.tsv
 S8 等位基因层面按区域/家族          <- t10_dA_dM_{regions,families,quintile}.tsv
@@ -33,7 +33,7 @@ def sheet(wb, name, title, blocks):
     """blocks: [(subtitle or None, DataFrame or list-of-lists)]"""
     ws = wb.create_sheet(name)
     ncol = max(len(b[1].columns) if isinstance(b[1], pd.DataFrame) else len(b[1][0])
-               for b in blocks)
+               for b in blocks if b[1] is not None)
     ws.cell(row=1, column=1, value=title).font = TTL
     ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=max(ncol, 2))
     r = 3
@@ -41,6 +41,9 @@ def sheet(wb, name, title, blocks):
         if sub:
             ws.cell(row=r, column=1, value=sub).font = HDR
             r += 1
+        if df is None:
+            r += 1
+            continue
         if isinstance(df, pd.DataFrame):
             cols = list(df.columns)
             for j, c in enumerate(cols, 1):
@@ -93,12 +96,12 @@ def main():
         ("S1", "Sample list with corrected labels (41 samples), Cellosaurus checks and per-sample "
                "FIRE coverage", "Methods, Data and sample labels; Results, readout paragraph"),
         ("S2", "Copy sets, windows and readout definitions", "Methods, Copy sets and windows"),
-        ("S3", "Readability under each r_full threshold (39 assessable samples)",
+        ("S3", "Readability under each r_full,cov threshold (39 assessable samples)",
          "Results, reliability paragraph"),
-        ("S4", "Reliability atlas for all 41 samples (double-zero and pooled-versus-haplotype "
-               "diagnostics)", "Table 1 note; Fig. 2; Fig. S2"),
-        ("S5", "Pairwise agreement among the 11 samples of the per-copy panel (55 pairs)",
-         "Results, copy ranking"),
+        ("S4", "Reliability atlas for all 41 samples (coverage-aware estimate, with the "
+               "double-zero estimator in _dz columns)", "Table 1 note; Fig. 2; Fig. S2"),
+        ("S5", "Pairwise agreement among the 11 samples of the per-copy panel (55 pairs, "
+               "coverage-aware attenuation)", "Results, copy ranking"),
         ("S6", "Partial correlations with AMB copies counted as non-expressed",
          "Results, RNA anchor"),
         ("S7", "Cross-sample methylation correlations", "Fig. 3e"),
@@ -126,15 +129,15 @@ def main():
         ["sample", "n_peaks", "bp_covered", "genome_fire_fraction", "log_depth"]]
     dep = dep.rename(columns={"n_peaks": "FIRE peaks", "bp_covered": "FIRE bp covered",
                               "genome_fire_fraction": "FIRE fraction of genome",
-                              "log_depth": "log10 depth (compendium)"})
+                              "log_depth": "log10 depth (compendium metadata)"})
     s1d = s1.merge(dep, on="sample", how="left")
     sheet(wb, "S1", "Table S1  Sample list with corrected labels and FIRE coverage (41 samples)", [
         ("Labels as used in this study. GM27730 is listed as lymphoblastoid in the compendium "
          "sample sheet and as iPSC by Cellosaurus; the Cellosaurus class is used here.", s1),
         ("Per-sample FIRE coverage, computed from each sample's all.percent.accessible.bw over the "
-         "hg38 autosomes. These columns are the sequencing-depth proxy referred to in Results: "
-         "GM27730 has 1.7% of its genome covered by FIRE intervals against 5.0-5.3% in the other "
-         "three pluripotent samples.", s1d)])
+         "hg38 autosomes. These columns describe FIRE output: GM27730 has 1.7% of its genome "
+         "covered by FIRE intervals against 5.0-5.3% in the other three pluripotent samples. The "
+         "log10 depth column is compendium metadata and enters no test.", s1d)])
 
     # ---------------------------------------------------------------- S2
     fam = [["family", "n_copies", "role", "5' 1 kb window", "400 bp window", "whole element"],
@@ -167,22 +170,55 @@ def main():
         ("Readouts", meas)])
 
     # ---------------------------------------------------------------- S3
-    s3 = pd.read_csv(os.path.join(RES, "t15", "t15_table_s7_threshold.tsv"), sep="\t")
+    s3 = pd.read_csv(os.path.join(RES, "t15", "t15_table_s7_threshold_cov.tsv"), sep="\t")
     sheet(wb, "S3", "Table S3  Readability under each r_full threshold (39 assessable samples)", [
-        ("readable = r_full at or above the threshold; ci_entirely_above and ci_entirely_below "
+        ("readable = r_full,cov at or above the threshold; ci_entirely_above and ci_entirely_below "
          "count samples whose 95% interval lies wholly on one side", s3)])
 
     # ---------------------------------------------------------------- S4
-    s4 = pd.read_csv(os.path.join(RES, "t15", "t15_table_s3.tsv"), sep="\t")
+    s4 = pd.read_csv(os.path.join(RES, "t15", "t15_table_s4_cov.tsv"), sep="\t")
+    s4["n_cov"] = s4["n_cov"].astype("Int64")
+    # 双零口径的旧列加 _dz 后缀，避免与 Table 1 的覆盖感知列混淆
+    s4 = s4.rename(columns={
+        "r_s_all": "r_s_all_dz", "r_s_nz": "r_s_nz_dz",
+        "r_full": "r_full_dz", "r_full_lo": "r_full_dz_lo", "r_full_hi": "r_full_dz_hi",
+        "rho_corr": "rho_corr_dz", "lo": "rho_corr_dz_lo", "hi": "rho_corr_dz_hi"})
+    s4 = s4[["sample", "group", "batch", "n", "n_cov", "med_pa5", "med_pa5_cov",
+             "frac_both0", "frac_both0_covered", "frac_nocov",
+             "r_s_cov", "r_full_cov", "r_full_cov_lo", "r_full_cov_hi", "readable",
+             "r_s_cov_1bp", "med_frac_cov",
+             "r_s_all_dz", "r_s_nz_dz", "r_full_dz", "r_full_dz_lo", "r_full_dz_hi",
+             "rho_obs", "rho_corr_dz", "rho_corr_dz_lo", "rho_corr_dz_hi",
+             "rho_m_h1", "rho_m_h2", "phased", "note"]]
     sheet(wb, "S4", "Table S4  Reliability atlas for all 41 samples", [
-        ("All 41 samples. r_s_all retains double-zero copies, r_s_nz removes them; phased = "
-         "False marks the two samples that fail the validity rule", s4)])
+        ("Primary estimate (no suffix): r_s_cov from the covered-base pa5, keeping a copy only when "
+         "both haplotypes cover at least 800 bp of the 1 kb window; r_full_cov = 2 r_s_cov / "
+         "(1 + r_s_cov) is its Spearman-Brown value and r_full_cov_lo/hi its 95% block-bootstrap "
+         "interval. n_cov counts those copies; readable is yes at r_full_cov >= 0.667 with the "
+         "lower bound above it, borderline when the interval spans it, no below it, n/a when the "
+         "validity rule fails. frac_nocov is the fraction of copies with neither haplotype "
+         "covered, which is the quantity the validity rule tests; frac_both0 is the fraction with "
+         "both haplotypes at zero pa5 (which also counts copies that are covered and closed). "
+         "frac_both0_covered is the fraction of those double zeros that pass the 800 bp rule; "
+         "med_pa5 is the median pooled pa5 over all copies under the fixed 1,000 bp denominator and "
+         "med_pa5_cov the same median under the covered-base one; med_frac_cov is the median covered "
+         "fraction of the pooled track; r_s_cov_1bp repeats r_s_cov with a 1 bp floor.", None),
+        ("Columns ending _dz are the double-zero estimator, kept for comparison only: r_s_all_dz "
+         "retains the double zeros, r_s_nz_dz removes the copies that are zero in both haplotypes, "
+         "r_full_dz is the Spearman-Brown value of r_s_nz_dz "
+         "with the interval r_full_dz_lo/hi, and rho_corr_dz_lo/hi correct rho_obs by r_full_dz. "
+         "These are the columns that Table 1 and the text replaced.", s4)])
 
     # ---------------------------------------------------------------- S5
-    s5 = pd.read_csv(os.path.join(RES, "t15", "t15_table_s8_pairwise.tsv"), sep="\t")
+    s5 = pd.read_csv(os.path.join(RES, "t15", "t15_table_s8_pairwise_cov.tsv"), sep="\t")
     sheet(wb, "S5", "Table S5  Pairwise agreement among the 11 samples of the per-copy panel "
                     "(55 pairs)", [
-        ("Attenuation-corrected values only where both samples are assessable", s5)])
+        ("rho_obs is the Spearman correlation between the two samples over the 1,032 copies; "
+         "rho_obs_lo/hi is its 95% block-bootstrap interval. r_s_cov and r_full_cov are the same "
+         "quantities as in Table S4, and rho_corr = rho_obs / sqrt(r_full_cov,a x r_full_cov,b), "
+         "clipped at 1. rho_corr is reported only where both samples pass the validity rule and "
+         "both r_full_cov values are at least 0.2; the 19 pairs that involve Hap1 or GM12878 give "
+         "rho_obs alone. n_copy is the number of copies both samples cover.", s5)])
 
     # ---------------------------------------------------------------- S6
     s6 = pd.read_csv(os.path.join(RES, "t13", "t13_partial_rho_allcopies.tsv"), sep="\t")

@@ -1,0 +1,10 @@
+threshold	n_phased	readable	ci_entirely_above	ci_spans_threshold	below_point	ci_entirely_below	readable_samples	borderline_samples
+0.5	39	11	10	3	28	26	A549, Caco-2, GM27730, H1, H9, Hek293T, HepG2, Jurkat, K562, MCF-7, WTC-11	A549, Panc1, THP-1
+0.55	39	10	10	2	29	27	Caco-2, GM27730, H1, H9, Hek293T, HepG2, Jurkat, K562, MCF-7, WTC-11	A549, Panc1
+0.6	39	10	9	1	29	29	Caco-2, GM27730, H1, H9, Hek293T, HepG2, Jurkat, K562, MCF-7, WTC-11	Hek293T
+0.65	39	10	8	2	29	29	Caco-2, GM27730, H1, H9, Hek293T, HepG2, Jurkat, K562, MCF-7, WTC-11	Hek293T, Jurkat
+0.667	39	10	8	2	29	29	Caco-2, GM27730, H1, H9, Hek293T, HepG2, Jurkat, K562, MCF-7, WTC-11	Hek293T, Jurkat
+0.7	39	8	7	3	31	29	Caco-2, GM27730, H1, H9, HepG2, K562, MCF-7, WTC-11	Hek293T, Jurkat, K562
+0.75	39	7	4	5	32	30	Caco-2, GM27730, H1, H9, HepG2, MCF-7, WTC-11	Caco-2, Hek293T, HepG2, K562, MCF-7
+0.8	39	4	4	2	35	33	GM27730, H1, H9, WTC-11	Caco-2, HepG2
+0.9	39	3	1	2	36	36	H1, H9, WTC-11	H9, WTC-11

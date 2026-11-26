@@ -1,0 +1,108 @@
+item	claim_in_manuscript	value_in_source	match	note
+总样本 41	41	41	OK	
+通过定相 39	39	39	OK	
+可读 10	10	10	OK	
+不可读 29	29	29	OK	
+未评估 2	two could not be assessed	2	OK	
+r_s_nz≤0 共 14	14	14	OK	
+摘要 10/29 口径	10 supported copy-level reading, 29 had measurable signal	10 / 29	OK	
+摘要 10/29/2	10 supported ... 29 ... two could not be assessed	10/29/2	OK	
+阈值句分母	39 samples that pass the validity rule	39	OK	
+阈值句稳定段	0.55-0.667, 10 readable	[10, 10, 10, 10]	OK	
+阈值句指向 Table S3	Table S3	-	OK	
+Table 1 行数	13	13	OK	
+Table 1 数值（13 行 × 5 列）	见表	t15_reliability_cov_41 / t15_rho_vs_h1_cov_41	OK	|Δ|≤6e-4
+Table S4 的 r_full,cov 与 Table 1 同值	41 行	0 处不符	OK	|Δ|≤6e-4
+Table S5 的 H1 列与 Table 1 同值	10 对	0 处不符	OK	|Δ|≤6e-4
+Table S5 有 55 对且 ρ_corr 36 对	55 / 36	55 / 36	OK	
+Table 2 行数	8	8	OK	
+Table 2 数值（8 行 × 2 列 × 3 数）	见表	t9m_partial_rho	OK	|Δ|≤6e-4
+Table 2 分母	n = 617 / 403	(np.int64(617), np.int64(403))	OK	
+L1PA2 raw	12.7	12.6584	OK	12.1–13.2
+L1HS did	10.1	10.0802	OK	9.4–11.9
+L1PA3 did	1.1	1.0651	OK	1.3–1.6
+LTR7 raw	6.0	6.0001	OK	5.6–6.5
+AluS raw	0.8	0.7692	OK	0.7–0.8
+L1PA2 组均值 16.0 / 3.4	16.0 ... 3.4	16.04 / 3.38	OK	
+L1PA2 DiD 12.3（合并参照）	+12.3 percentage points	12.27	OK	
+DiD 合并参照 12.27	12.266 fixed	12.267	OK	
+分母口径差 <0.01	12.265 covered	12.265	OK	
+逐样本范围 8.76-15.92	8.76 ... 15.92	15.92/14.47/13.09/8.76	OK	中间两值 14.47/13.09 只进 Fig. 1e 源数据，不在正文
+逐样本 14.47 / 13.09 仍在源数据	Fig. 1e	14.47/13.09	OK	
+留一 11.3–13.7	11.3–13.7	11.3–13.7	OK	
+Hap1 r_s 0.79→0.121	0.79/0.121	0.790/0.121	OK	
+Panc1 r_s 0.691→0.258	0.691/0.258	0.691/0.258	OK	
+A549 r_s 0.647→0.3	0.647/0.3	0.647/0.300	OK	
+THP-1 r_s 0.622→0.302	0.622/0.302	0.622/0.302	OK	
+25 个 LCL 的 r_s_nz 区间	−0.20 到 +0.10	-0.20 到 0.10	OK	实际 -0.197 到 0.102
+Hap1 无覆盖 88.3%	88.3%	88.3%	OK	
+GM12878 hap2 28.0%	28.0%	28.0%	OK	
+GM12878 ρ(pooled,hap2)=0.12	0.12	0.12	OK	
+ρ(pa5,r_full,cov) all assessed	+0.70	+0.70	OK	
+ρ(pa5,r_full,cov) non-pluripotent	+0.58	+0.58	OK	
+ρ(pa5,r_full,cov) LCL	+0.22	+0.22	OK	
+LCL 的 +0.22 与 p 值成句	+0.22 (p = 0.30)	text	OK	
+Table 2 H1 all	+0.441	+0.441	OK	
+Table 2 K562 all	+0.067	+0.067	OK	
+Table 2 HG002 all	−0.020	-0.020	OK	
+WGBS −0.23	−0.23	text	OK	
+5mC vs H1 整句	correlated at ρ = −0.82 (95% CI −0.84 to −0.80)	text	OK	
+5mC vs H9	−0.82	-0.82	OK	
+5mC vs WTC-11	−0.80	-0.80	OK	
+5mC vs GM27730	−0.73	-0.73	OK	
+5mC vs K562	−0.29	-0.29	OK	
+5mC vs HepG2	−0.34	-0.34	OK	
+17 intergenic positives	17	17	OK	
+21.8% zero	21.8%	21.8	OK	
+315 detected	315	315	OK	
+946 copies	946	946	OK	
+58.4% 反号	58.4%	58.4	OK	
+quintiles	−0.02, −0.09, −0.21, −0.22, −0.50	-	OK	
+246 窗 7.1e-15	246 windows, maximum difference 7.1×10⁻¹⁵	-	OK	
+排查日记已移出正文	no debug narrative	-	OK	
+行序问题只留一句	permuted row order	-	OK	
+Table S4 41 行有 n_cov	41 rows with n_cov filled	41	OK	381 补的 15 个样本 + 331 的 26 个
+可评估 39	39 assessable samples	39	OK	
+双零有覆盖 27.4%	27.4%	27.4%	OK	
+单样本 2.0–92%，中位 40.5%	2.0% to 92%, median 40.5%	2.0-92%, med 40.5%	OK	
+双零覆盖率与可及性 −0.66	Spearman −0.66	-	OK	
+不可读 29 个 r_full_cov 0.003–0.51	0.003–0.51	0.003-0.51	OK	
+可读 10 个 r_full_cov 0.68–0.94	0.68–0.94	0.68-0.94	OK	
+无一 r_s_cov ≤0	none at or below zero	0	OK	
+4 个多能样本双零覆盖 2.5–30%	2.5–30%	-	OK	
+LCL 双零覆盖达 92%	up to 92%	-	OK	
+LCL 共 26 个（25 通过）	26 of the 41	26 LCL / 25 pass	OK	
+无 sequencing depth 归因	0 处	0	OK	
+Discussion 改说 cut-off 的选择	choice of cut-off	-	OK	
+Introduction 问题一改问 cut-off	change of cut-off	-	OK	
+噪声模拟段无 therefore	0 处	4	OK	
+双零方向：抬高三个样本	carry ... over the readable line	-	OK	
+可及性相关 +0.70 / +0.58 / +0.22	+0.70 / +0.58 / +0.22	-	OK	
+同供体对照 0.11 / 0.25	0.11 / 0.25	-	OK	
+六对多能样本 0.92–0.98	0.918-0.979	0.92–0.98	OK	
+0.93–0.98 只出现在「相对 H1」处	0 处裸用	0	OK	0 处未标 H1
+DiD 分层 bootstrap	9.4 to 14.6	-	OK	
+DiD 精确置换 p	p = 0.003	-	OK	
+DiD 逐样本范围 8.8–15.9	8.8 to 15.9	-	OK	
+摘要删掉拷贝层 CI	no copy-level CI	-	OK	
+Methods 分母约定	coverage-aware value	-	OK	
+Methods 800 bp 门槛	at least 800 bp	-	OK	
+旧双零口径只作对照	alternative estimate	-	OK	
+部分覆盖稀少 0.12%	0.12% of the 84,624	0.12% (100/84624)	OK	
+1 bp 与 800 bp 差 ≤0.01	at most 0.01 in r_s	max |diff| 0.0102	OK	
+GM12878 hap1 0.97	0.97	0.97	OK	
+Hap1 88.3% 无覆盖	88.3%	88.3%	OK	
+旧 90.3% 双零已全部退出正文	0 处	0	OK	
+图注 Fig. 1	存在	-	OK	
+图注 Fig. 2	存在	-	OK	
+图注 Fig. 3	存在	-	OK	
+图注 Fig. S1	存在	-	OK	
+图注 Fig. S2	存在	-	OK	
+图注 Fig. S3	存在	-	OK	
+图注 Fig. S4	存在	-	OK	
+图注 Fig. S5	存在	-	OK	
+Fig. 2 覆盖 41	all 41 samples	-	OK	
+Fig. 2b 39	39 samples that pass the validity rule	-	OK	
+Fig. 3a 与正文一致（+0.70）	+0.70	-	OK	
+Fig. S3 是 31 格	31 cells	-	OK	
+31 格正文改指 S3	Fig. S3	-	OK	

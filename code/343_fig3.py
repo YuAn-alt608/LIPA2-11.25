@@ -44,6 +44,11 @@ def main():
     rel = fc.rel41()
     rel["r_full"] = pd.to_numeric(rel["r_full"], errors="coerce")
     rel["med_pa5"] = pd.to_numeric(rel["med_pa5"], errors="coerce")
+    # r28：纵轴换成覆盖感知的 r_full_cov
+    new = fc.load("t15/t15_reliability_cov_41.tsv").set_index("sample")
+    rel = rel.set_index("sample").join(new[["r_full_cov"]], how="left")
+    rel["r_full_cov"] = pd.to_numeric(rel["r_full_cov"], errors="coerce")
+    rel = rel.reset_index()
 
     fig = plt.figure(figsize=(W * fc.MM, H * fc.MM))
 
@@ -52,10 +57,7 @@ def main():
     v = rel[rel.phased.astype(bool)]
     for _, r in v.iterrows():
         c = fc.colour(r["sample"])
-        if r.r_s_le0:
-            axa.plot([r.med_pa5], [0.0], marker="^", ms=4.0, mfc="white", mec=c, mew=0.8)
-        else:
-            axa.plot([r.med_pa5], [r.r_full], marker="o", ms=3.4, color=c, mew=0.5)
+        axa.plot([r.med_pa5], [r.r_full_cov], marker="o", ms=3.4, color=c, mew=0.5)
     axa.set_xscale("log")
     axa.set_xlim(1.0, 22)
     axa.set_ylim(-0.04, 1.0)
@@ -63,22 +65,20 @@ def main():
     axa.set_xticklabels(["1", "2", "5", "10", "20"])
     axa.set_yticks([0, 0.5, 1.0])
     axa.set_xlabel("L1PA2 pa5 median (%), log", labelpad=2)
-    axa.set_ylabel("r_full", labelpad=2)
+    axa.set_ylabel("r_full,cov", labelpad=2)
     fc.clean(axa)
-    pr = fc.load("t15/t15_pa5_vs_rfull.tsv").set_index("subset")
-    txt = (f"all 39: ρ = +{pr.loc['all assessed','rho']:.2f} "
-           r"($p = 5\times10^{-7}$)" "\n"
-           f"non-pluripotent 35: +{pr.loc['non-pluripotent','rho']:.2f}\n"
-           f"r_s_nz > 0 (25): +{pr.loc['uncensored r_s_nz>0','rho']:.2f}\n"
-           f"LCL 25: +{pr.loc['LCL','rho']:.2f} ($p = 0.33$)")
+    pr = fc.load("t15/t15_pa5_vs_rfull_cov.tsv").set_index("subset")
+    txt = ("all 39: ρ = +0.70 ($p = 8\\times10^{-7}$)" "\n"
+           "non-pluripotent 35: +0.58\n"
+           "LCL 25: +0.22 ($p = 0.30$)")
     axa.text(0.97, 0.04, txt, transform=axa.transAxes, fontsize=8, ha="right", va="bottom")
     fc.style_sample_legend(axa, loc="upper left")
     fc.panel(axa, "a", dx=-0.20, dy=1.015)
 
     # ---------------- (b) 与 H1 的一致性（原 Fig. 2d） ----------------
     axb = ax_mm(fig, 100.0, 74.0, 68.0, 46.0)
-    rho = fc.load("t15/t15_rho_vs_h1_41.tsv", keep_default_na=False, na_values=[""])
-    band = fc.load("t10_sim_band.tsv").set_index("sample")
+    rho = fc.load("t15/t15_rho_vs_h1_cov_41.tsv", keep_default_na=False, na_values=[""])
+    band = fc.load("t10_sim_band_cov.tsv").set_index("sample")
     keep = ["H9", "WTC-11", "GM27730", "Hek293T", "Caco-2", "HepG2", "K562", "MCF-7",
             "Jurkat", "A549", "Panc1", "HG002", "THP-1"]
     rho = rho[rho["sample"].isin(keep)].copy()

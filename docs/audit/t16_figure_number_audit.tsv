@@ -1,0 +1,98 @@
+figure	panel	quantity	value_on_figure	value_in_manuscript	source_table	status	note
+Fig. 1	a	预设 c5 阈值数	nine	nine pre-specified cut-offs	t1_did_perm4_c5	OK	
+Fig. 1	a	top-4 恰好多能的阈值数	4	four of the nine	t1_did_perm4_c5	OK	
+Fig. 1	a	闯入者	Caco-2, K562	Caco-2 and K562	t1_did_perm4_c5	OK	
+Fig. 1	a	GM27730 名次序列	4--4--4--5--5--7--9--5--4	GM27730 dropped out first	t1_did_perm4_c5	OK	
+Fig. 1	a	c5 置换 p 下限	9.87e-06	9.9×10⁻⁶	t1_did_perm4_c5	OK	
+Fig. 1	a	c5 置换 p 上限	5.925e-05	5.9×10⁻⁵	t1_did_perm4_c5	OK	
+Fig. 1	a	pa5 面板 exact p	0.0079	1/126 = 0.0079	t1_did_perm4_pa5	OK	
+Fig. 1	b	多能组 L1PA2 中位数	16.0	16.0%	t13	OK	
+Fig. 1	b	非多能组 L1PA2 中位数	3.4	3.4%	t13	OK	
+Fig. 1	b	L1PA2 raw 差	12.7	+12.7 percentage points	t13	OK	
+Fig. 1	b	L1PA2 raw 点估计	12.7	+12.7 percentage points	t13	OK	
+Fig. 1	b	L1PA2 DiD	12.3	+12.3 percentage points	t13	OK	
+Fig. 1	b	L1PA2 DiD 区间	11.7-12.8	the sample-level uncertainty of the contrast	t13	OK	
+Fig. 1	b	L1HS DiD	10.1	+10.1	t13	OK	
+Fig. 1	b	L1PA3 DiD	1.1	+1.1	t13	OK	
+Fig. 1	b	L1PA4–7 raw	0.4	+0.4	t13	OK	
+Fig. 1	b	逐样本 H1	15.92	15.92	t13	OK	
+Fig. 1	b	逐样本 WTC-11	14.47	figure-only	t13	OK	source_data 核对 WTC-11 = 14.47
+Fig. 1	b	逐样本 H9	13.09	figure-only	t13	OK	source_data 核对 H9 = 13.09
+Fig. 1	b	逐样本 GM27730	8.76	8.76	t13	OK	
+Fig. 1	b	留一 DiD 区间	11.3-13.7	11.3-13.7	t13	OK	
+Fig. 1	c	LTR7 raw	6.0	+6.0	t13	OK	
+Fig. 1	c	LTR7 raw 点估计	6.0	gave +6.0	t13	OK	
+Fig. 1	c	L1PA2 raw (start400)	8.2	+8.2	t13	OK	
+Fig. 1	c	L1HS raw (start400)	6.6	+6.6	t13	OK	
+Fig. 1	c	AluS raw	0.8	+0.8	t13	OK	
+Fig. 1	c	AluS DiD	0.4	+0.4	t13	OK	
+Fig. 1	c	SVA_E raw	0.4	+0.4	t13	OK	
+Fig. 1	c	SVA_F raw	-0.03	-0.03	t13	OK	
+Fig. 2	a,b	n_total	41	41 samples	t15_reliability_41	OK	
+Fig. 2	a,b	n_phased	39	39 passed a phasing check	t15_reliability_41	OK	
+Fig. 2	a,b	n_readable	10	10 are readable	t15_reliability_41	OK	
+Fig. 2	a,b	n_not_readable	29	29 had measurable signal	t15_reliability_41	OK	
+Fig. 2	a,b	n_not_assessed	0	two could not be assessed	t15_reliability_41	OK	
+Fig. 2	a,b	n_rs_le0	14	14 negative values	t15_reliability_41	OK	
+Fig. 2	a	覆盖感知样本 39	39	all 39 assessable samples	t15_table_s4_cov	OK	
+Fig. 2	a	LCL r_s_cov 下限 0.001	0.001	stays between 0.001 and 0.14	t15_table_s4_cov	OK	
+Fig. 2	a	r_s_cov 无一 ≤0	0	no sample has r_s_cov at or below zero	t15_table_s4_cov	OK	
+Fig. 2	a,b	Hap1 r_s 0.790 → 0.121	0.790→0.121	0.790 to 0.121	t15_reliability_41	OK	
+Fig. 2	a,b	Panc1 0.691 → 0.258	0.691→0.258	0.691 to 0.258	t15_reliability_41	OK	
+Fig. 2	a,b	A549 0.647 → 0.300	0.647→0.300	0.647 to 0.300	t15_reliability_41	OK	
+Fig. 2	a,b	THP-1 0.622 → 0.302	0.622→0.302	0.622 to 0.302	t15_reliability_41	OK	
+Fig. 2	a	图注第三个系列	small squares	small squares keep a copy only where both haplotypes cover at least 800 bp	Fig2.pdf 图例	OK	图例两项：double-zero removed / coverage-aware
+Fig. 3	a	全体 Spearman	0.7	Spearman +0.70	t15_pa5_vs_rfull_cov	OK	
+Fig. 3	a	非多能 Spearman	0.58	+0.58	t15_pa5_vs_rfull_cov	OK	
+Fig. 3	a	仅 LCL	0.22	+0.22	t15_pa5_vs_rfull_cov	OK	
+Fig. 3	b	样本数	13	13 samples of Table 1	t15_rho_vs_h1_cov_41	OK	
+Fig. 3	b	H9 ρ_corr	0.979	0.979 (0.965-0.993)	t15_rho_vs_h1_cov_41	OK	
+Fig. 3	b	WTC-11 ρ_corr	0.949	0.949 (0.923-0.973)	t15_rho_vs_h1_cov_41	OK	
+Fig. 3	b	GM27730 ρ_corr	0.928	0.928 (0.897-0.954)	t15_rho_vs_h1_cov_41	OK	
+Fig. 3	b	Hek293T ρ_corr	0.631	0.631 (0.570-0.691)	t15_rho_vs_h1_cov_41	OK	
+Fig. 3	b	Caco-2 ρ_corr	0.52	0.520 (0.457-0.571)	t15_rho_vs_h1_cov_41	OK	
+Fig. 3	b	HepG2 ρ_corr	0.456	0.456 (0.392-0.514)	t15_rho_vs_h1_cov_41	OK	
+Fig. 3	b	K562 ρ_corr	0.445	0.445 (0.369-0.511)	t15_rho_vs_h1_cov_41	OK	
+Fig. 3	b	MCF-7 ρ_corr	0.396	0.396 (0.332-0.456)	t15_rho_vs_h1_cov_41	OK	
+Fig. 3	b	Jurkat ρ_corr	0.291	0.291 (0.225-0.352)	t15_rho_vs_h1_cov_41	OK	
+Fig. 3	b	A549 ρ_corr	0.357	0.357 (0.275-0.437)	t15_rho_vs_h1_cov_41	OK	
+Fig. 3	b	Panc1 ρ_corr	0.335	0.335 (0.237-0.422)	t15_rho_vs_h1_cov_41	OK	
+Fig. 3	b	HG002 ρ_corr	0.158	0.158 (0.037-0.300)	t15_rho_vs_h1_cov_41	OK	
+Fig. 3	b	THP-1 ρ_corr	0.081	0.081 (0.011-0.158)	t15_rho_vs_h1_cov_41	OK	
+Fig. 3	b	H9 高出噪声带	0.023	0.023 above its band	t10_sim_band_cov	OK	
+Fig. 3	c	H1 全部拷贝 ρ	0.441	+0.441 (0.346-0.530)	t9m_partial_rho	OK	
+Fig. 3	c	H1 基因间 ρ	0.398	+0.398 (0.301-0.506)	t9m_partial_rho	OK	
+Fig. 3	c	H1 空心（全部）	0.461	+0.46 (95% CI 0.39-0.52)	t13	OK	
+Fig. 3	c	H1 空心（基因间）	0.497	+0.50 (0.42-0.56)	t13	OK	
+Fig. 3	c	K562 ρ	0.067	+0.067	t9m_partial_rho	OK	
+Fig. 3	c	HG002 ρ	-0.02	-0.020	t9m_partial_rho	OK	
+Fig. 3	c	AMB 剔除 n	403	Table 2	t9m_partial_rho	OK	
+Fig. 3	d	基因间拷贝数	403	403 intergenic	t9m_rna_by_copy	OK	
+Fig. 3	d	EXP 数	17	17 EXP copies among 403 intergenic	t9m_rna_by_copy	OK	
+Fig. 3	d	零表达比例	21.8	21.8% of intergenic copies	t9m_rna_by_copy	OK	
+Fig. 3	d	检测到	315	315 detected copies	t9m_rna_by_copy	OK	
+Fig. 3	d	秩相关	0.47	ρ = +0.47	t9m_rna_by_copy	OK	
+Fig. 3	e	H1 5mC ρ	-0.82	-0.82	t9d_coupling	OK	
+Fig. 3	e	H9 5mC ρ	-0.82	-0.82	t9d_coupling	OK	
+Fig. 3	e	WTC-11 5mC ρ	-0.8	-0.80	t9d_coupling	OK	
+Fig. 3	e	GM27730 5mC ρ	-0.73	-0.73	t9d_coupling	OK	
+Fig. 3	e	K562 5mC ρ	-0.29	-0.29	t9d_coupling	OK	
+Fig. 3	e	HepG2 5mC ρ	-0.34	-0.34	t9d_coupling	OK	
+Fig. S1	a	预设阈值数	nine	nine pre-specified cut-offs	t1_did_perm4_c5	OK	
+Fig. S1	a	范围外阈值	0.70, 0.75	Cut-offs 0.70 and 0.75 lie outside	t1_did_perm4_c5	OK	
+Fig. S1	b	C(41,4)	101,270	C(41,4) = 101,270	t1_did_perm4_c5	OK	
+Fig. S1	b	p 范围	9.9e-06-5.9e-05	9.9×10⁻⁶ to 5.9×10⁻⁵	t1_did_perm4_c5	OK	
+Fig. S4	a	样本数	40	13 samples	t10_sim_band	OK	
+Fig. S4	a	H9 高出带	0.023	0.023 above its band	t10_sim_band_cov	OK	
+Fig. S2	a	Hap1 无覆盖比例	88.3	88.3% of its copies have neither haplotype covered	t15_reliability_cov_41	OK	
+Fig. S2	b	GM12878 hap2 覆盖	28.0	28.0%	t15_reliability_41	OK	
+Fig. S2	b	GM12878 ρ(池化,hap2)	0.12	ρ = 0.12	t15_reliability_41	OK	
+Fig. S2	b	39 个样本自洽区间	0.46-0.98	0.46-0.98	t15_selfconsistency	OK	
+Fig. S2	b	自洽中位	0.86	median 0.86	t15_selfconsistency	OK	
+Fig. S5	a	n	946	946 L1PA2 copies	t9i_dA_by_copy	OK	
+Fig. S5	a	ρ	-0.28	-0.28 (95% CI -0.33 to -0.22	t9i_dA_by_copy	OK	
+Fig. S5	b	五分位序列	-0.02 / -0.09 / -0.21 / -0.22 / -0.50	-0.02, -0.09, -0.21, -0.22 and -0.50	t9i_dA_by_copy	OK	
+Fig. S3	a	格子数	31	31 cells	t10_readability_map	OK	
+Fig. S3	a	31 格 Spearman	0.87	Spearman +0.87	t10_readability_map	OK	
+Fig. S3	a	22 格 Spearman	0.77	+0.77	t10_readability_map	OK	
+Fig. S3	a	家族分布	{'L1PA2': 9, 'L1HS': 8, 'LTR7': 7, 'AluS': 7}	31	t10_readability_map	OK	
