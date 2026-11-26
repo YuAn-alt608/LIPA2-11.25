@@ -45,7 +45,7 @@ everything after them runs offline.
 ## 3. Audits
 
 ```
-python 345_text_audit.py      # 112 checks: text and tables vs data/derived
+python 345_text_audit.py      # 114 checks: text and tables vs data/derived
 python 346_figure_audit.py    # 97 checks: *_numbers.json vs text
 ```
 

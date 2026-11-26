@@ -347,12 +347,22 @@ _ha = s4c.set_index("sample").loc["Hap1"]
 chk("Hap1 每条轨道 8% 非零", "8% of copies",
     f"{_ha.nz_hap1*100:.1f}% / {_ha.nz_hap2*100:.1f}%",
     "non-zero in 8% of copies" in flat and abs(_ha.nz_hap1 * 100 - 8.1) < 0.2)
-# r31 修订：四个不可读的非 LCL 样本是 1.77–3.22，下界 1.8
-_o4 = s4c[s4c["sample"].isin(["A549", "Panc1", "THP-1", "HG002"])].med_pa5_cov
-chk("四个其他样本 1.8–3.2%", "1.8 and 3.2%",
-    f"{_o4.min():.2f}–{_o4.max():.2f}",
-    "the four others between 1.8 and 3.2%" in flat
-    and abs(_o4.min() - 1.8) < 0.05 and abs(_o4.max() - 3.2) < 0.05)
+# r32 回改：四个不可读的非 LCL 样本是 HCT116 1.49、Panc1 1.77、THP-1 2.35、A549 3.22
+# （r31 误用 HG002 顶替 HCT116，HG002 本身在 25 个 LCL 内，重复计数）
+_o4 = s4c[s4c["sample"].isin(["A549", "Panc1", "THP-1", "HCT116"])]
+chk("四个其他样本 1.5–3.2%", "1.5 and 3.2%",
+    f"{_o4.med_pa5_cov.min():.2f}–{_o4.med_pa5_cov.max():.2f}",
+    "the four others between 1.5 and 3.2%" in flat
+    and abs(_o4.med_pa5_cov.min() - 1.5) < 0.05
+    and abs(_o4.med_pa5_cov.max() - 3.2) < 0.05)
+chk("四个其他样本不含 LCL", "4 个",
+    int(((s4c.readable == "no") & (s4c.group != "other (LCL)")).sum()),
+    int(((s4c.readable == "no") & (s4c.group != "other (LCL)")).sum()) == 4
+    and set(_o4["sample"]) == {"A549", "Panc1", "THP-1", "HCT116"})
+# r32：FIG 摘要上限 250 词
+_ab = [p for p in paras if p.startswith("Copy-level accessibility at young LINE-1")][0]
+_nw = len(_ab.split())
+chk("摘要 150–250 词", "150–250", _nw, 150 <= _nw <= 250)
 
 
 # ---------- 13 图注与图号 ----------
