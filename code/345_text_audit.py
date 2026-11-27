@@ -401,6 +401,17 @@ for _h in ("Statements and Declarations", "Funding", "Competing interests",
            "Ethics approval and consent to participate", "Consent for publication",
            "Data availability", "Code availability", "Author contributions"):
     chk(f"声明小节 {_h}", "存在", "-", _h in paras)
+# r34：编辑部技术检查 —— 临床注册声明必须原文出现在稿中
+chk("临床注册声明原文", "Clinical trial number: not applicable.", "-",
+    "Clinical trial number: not applicable." in paras)
+# r34：Table S1–S8 各要一条独立的表注（原来挤在一段 "Supplementary items" 里）
+_tcaps = [p for p in paras if re.match(r"^Table S[1-8]\s", p)]
+chk("补充表注 8 条独立成段", "8 条 S1–S8",
+    f"{len(_tcaps)} 条",
+    len(_tcaps) == 8 and {t.split()[1] for t in _tcaps} == {f"S{i}" for i in range(1, 9)})
+chk("表注小节标题", "Table legends", "-", "Table legends" in paras)
+chk("无合并的 Supplementary items 段", "0 处", "-",
+    not any(p.startswith("Supplementary items.") for p in paras))
 # 0.003–0.51 是 r_full,cov 的范围（这 29 个的 r_s_cov 最大只有 0.34）
 _nr = s4c[(s4c.phased == True) & (~s4c.readable.isin(["yes", "borderline"]))]  # noqa: E712
 chk("29 个不可读的 r_full,cov 0.003–0.51", "0.003–0.51 in r_full,cov",

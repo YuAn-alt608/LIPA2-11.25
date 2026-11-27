@@ -6,7 +6,7 @@ the text cannot be found in a table or disagrees after rounding.
 
 ## 345 — text and tables versus data
 
-126 checks. Each is a triple (location in the manuscript, expected value, source table and
+130 checks. Each is a triple (location in the manuscript, expected value, source table and
 column). The script extracts the value from the DOCX, recomputes it from the deposited table, and
 compares within the rounding used in the text.
 
@@ -30,7 +30,12 @@ identifiers (Hek293T, Panc1, Hap1) must not reappear, the seven abbreviations mu
 first use, the drawing software and its version must be stated in Methods, and the eight declaration
 headings must all be present.
 
-Last run against the deposited manuscript: **126 checks, 0 mismatch**.
+The revision after the technical check added four more, all of them format rather than number
+guards: the sentence "Clinical trial number: not applicable." must be present verbatim, and Tables
+S1-S8 must each have their own caption paragraph beginning with the table number, with no run-on
+"Supplementary items" paragraph left behind.
+
+Last run against the deposited manuscript: **130 checks, 0 mismatch**.
 
 ## 346 — figures versus text
 

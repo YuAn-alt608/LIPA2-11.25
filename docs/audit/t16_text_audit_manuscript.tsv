@@ -120,6 +120,10 @@ HAP1 引图已说明只画叉	HAP1 appears there only as a cross	-	OK
 声明小节 Data availability	存在	-	OK	
 声明小节 Code availability	存在	-	OK	
 声明小节 Author contributions	存在	-	OK	
+临床注册声明原文	Clinical trial number: not applicable.	-	OK	
+补充表注 8 条独立成段	8 条 S1–S8	8 条	OK	
+表注小节标题	Table legends	-	OK	
+无合并的 Supplementary items 段	0 处	-	OK	
 29 个不可读的 r_full,cov 0.003–0.51	0.003–0.51 in r_full,cov	0.003–0.51	OK	
 Fig. 2b 39	39 samples that pass the validity rule	-	OK	
 Fig. 3a 与正文一致（+0.70）	+0.70	-	OK	
